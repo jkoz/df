@@ -1,0 +1,40 @@
+XTerm.vt100.translations: #override\n\
+    Shift <KeyPress> Select:select-cursor-start() select-cursor-end(PRIMARY, CLIPBOARD, CUT_BUFFER0) \n\
+    Shift <KeyPress> Insert:insert-selection(PRIMARY, CLIPBOARD, CUT_BUFFER0) \n\
+    ~Ctrl ~Meta <Btn2Up>:insert-selection(PRIMARY, CLIPBOARD, CUT_BUFFER0) \n\
+    <BtnUp>:select-end(PRIMARY, CLIPBOARD, CUT_BUFFER0) \n
+XTerm*font: -misc-fixed-medium-r-normal--15-140-75-75-c-90-iso10646-1
+XTerm*internalBorder: 3
+XTerm*loginShell: true
+XTerm*scrollBar: false
+XTerm*scrollKey: true
+XTerm*saveLines: 1000
+XTerm*multiClickTime: 250
+XTerm*borderLess:true
+XTerm*pointerColor: red
+XTerm*background: black
+XTerm*foreground: white
+XTerm*cursorColor: grey
+XTerm*pointerColorBackground: black
+
+!VT100.modifyCursorKeys:0
+
+URxvt*tintColor: Blue
+URxvt*transparent: false
+URxvt*foreground: Grey90
+URxvt*background: Grey11
+URxvt*font: -misc-fixed-medium-r-normal--15-140-75-75-c-90-iso10646-1
+URxvt*color4: RoyalBlue
+URxvt*color12: RoyalBlue
+URxvt*scrollBar: false
+URxvt*scrollBar_right: true
+URxvt*scrollstyle: rxvt
+URxvt*termName: xterm-256color
+URxvt.iconFile: /usr/share/icons/crystalsvg/16x16/apps/terminal.png
+URxvt.keysym.Shift-Control-V: perl:clipboard:paste
+URxvt.iso14755: false
+URxvt.perl-ext-common: default,tabbed,clipboard
+URxvt.tabbed.tabbar-fg: 3
+URxvt.tabbed.tabbar-bg: 0
+URxvt.tabbed.tab-fg:    7
+URxvt.tabbed.tab-bg:    8

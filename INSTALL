@@ -1,0 +1,28 @@
+#!/bin/bash
+
+rm -f ~/.vimrc && cp $WS/dotfiles/vimrc ~/.vimrc
+rm -f ~/.gvimrc && cp $WS/dotfiles/gvimrc ~/.gvimrc
+rm -f ~/.tmux.conf && cp $WS/dotfiles/tmux.conf ~/.tmux.conf
+rm -rf ~/.bashrc && cp $WS/dotfiles/bashrc ~/.bashrc
+rm -rf ~/.bashrc.d && cp -R $WS/dotfiles/bashrc.d ~/.bashrc.d
+rm -f ~/.muttrc && cp $WS/dotfiles/muttrc ~/.muttrc
+rm -rf ~/.muttrc.d && cp -R $WS/dotfiles/muttrc.d ~/.muttrc.d
+rm -f ~/.inputrc && cp $WS/dotfiles/inputrc ~/.inputrc
+rm -f ~/.dircolors && cp $WS/dotfiles/dircolors ~/.dircolors
+rm -f ~/.commands && cp $WS/dotfiles/commands ~/.commands
+rm -f ~/.xinitrc && cp $WS/dotfiles/xinitrc ~/.xinitrc
+rm -f ~/.bash_profile && cp $WS/dotfiles/bash_profile ~/.bash_profile
+rm -f ~/.Xdefaults && cp $WS/dotfiles/Xdefaults ~/.Xdefaults
+#rm -f ~/.Xmodmap && cp $WS/dotfiles/Xmodmap ~/.Xmodmap
+rm -f ~/.zshrc && cp $WS/dotfiles/zshrc ~/.zshrc
+
+# window managers
+rm -f ~/.config/openbox/autostart.sh && cp $WS/dotfiles/config/openbox/autostart.sh ~/.config/openbox/
+rm -f ~/.config/openbox/rc.xml && cp $WS/dotfiles/config/openbox/rc.xml ~/.config/openbox/
+rm -f ~/.config/tint2/tint2rc && cp $WS/dotfiles/config/tint2/tint2rc ~/.config/tint2/
+
+# scripts
+mkdir -p ~/bin
+rm -rf ~/bin/battery && cp $WS/dotfiles/scripts/battery ~/bin/
+rm -rf ~/bin/getip && cp $WS/dotfiles/scripts/getip ~/bin/
+rm -rf ~/bin/vdiff && cp $WS/dotfiles/scripts/vdiff ~/bin/ && chmod +x ~/bin/vdiff
