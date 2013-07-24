@@ -8,6 +8,11 @@ export HISTSIZE=10000
 export HISTIGNORE="&:[ ]*:exit"
 export GREP_OPTIONS="--color"
 
+export XMODIFIERS=@im=SCIM
+export GTK_IM_MODULE=xim
+export QT_IM_MODULE=xim
+
+
 #shopt -s histappend # append history file
 
 test "$UID" -eq 0 && export PS1="\e[01;31m# \e[0m" || export PS1="$ "

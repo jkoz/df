@@ -461,12 +461,33 @@ sudo pacman -S ffmpeg
 sudo pacman -S mc
 pacman -S lib32-gtk # for install olad8
 
+pacman -S xorg-fonts-100dpi
+
+
+# for install olad8
+pacman -S lib32-gtk
+pacman -S lib32-alsa-lib
+pacman -S lib32-nvidia-utils
+pacman -S lib32-libdbus
+
+sudo pacman -S cdrkit
+
 #pacman-upate all package
 pacman -Syu
+pacman -Ss subversion
 
-#
 yaourt -S dropbox dropbox-cli
-sudo yaourt -S shrew-vpn-client
+yaourt -S shrew-vpn-client
+
+#pkgfile search package info of a lib
+sudo yaourt -S pkgfile
+#
+# view library dependency of built file
+ldd /opt/oald8/oald8-bin
+
+#-cdrom-cdkit-burn-iso {{{1
+sudo pacman -S cdrkit
+readcd -v dev=/dev/cdrom -f abc.iso
 #1}}}
 
 #-mplayer {{{1
