@@ -284,6 +284,11 @@ cat /etc/sysconfig/network-scripts/route-eth0
 ADDRESS0=172.21.129.0
 NETMASK0=255.255.255.0
 GATEWAY0=192.168.99.160                   
+
+# way to access internet when wah 
+sudo route del -net 192.168.1.0/24 gw 192.168.19.54
+sudo route del default gw 192.168.19.54 dev tap0
+disable dns setting
 #1}}}---------------------------------------------------------------------------
 
 #-photo {{{1

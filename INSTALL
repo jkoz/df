@@ -9,7 +9,7 @@ rm -f ~/.muttrc && cp $WS/dotfiles/muttrc ~/.muttrc
 rm -rf ~/.muttrc.d && cp -R $WS/dotfiles/muttrc.d ~/.muttrc.d
 rm -f ~/.inputrc && cp $WS/dotfiles/inputrc ~/.inputrc
 rm -f ~/.dircolors && cp $WS/dotfiles/dircolors ~/.dircolors
-rm -f ~/.commands && cp $WS/dotfiles/commands ~/.commands
+rm -f ~/.cmd && cp $WS/dotfiles/cmd ~/.cmd
 rm -f ~/.xinitrc && cp $WS/dotfiles/xinitrc ~/.xinitrc
 rm -f ~/.bash_profile && cp $WS/dotfiles/bash_profile ~/.bash_profile
 rm -f ~/.Xdefaults && cp $WS/dotfiles/Xdefaults ~/.Xdefaults
