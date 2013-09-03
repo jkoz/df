@@ -1,5 +1,7 @@
 #!/bin/bash
 
+if test -z "$WS"; then WS=$1; fi
+
 rm -f ~/.vimrc && cp $WS/dotfiles/vimrc ~/.vimrc
 rm -f ~/.gvimrc && cp $WS/dotfiles/gvimrc ~/.gvimrc
 rm -f ~/.tmux.conf && cp $WS/dotfiles/tmux.conf ~/.tmux.conf
@@ -26,3 +28,7 @@ mkdir -p ~/bin
 rm -rf ~/bin/battery && cp $WS/dotfiles/scripts/battery ~/bin/
 rm -rf ~/bin/getip && cp $WS/dotfiles/scripts/getip ~/bin/
 rm -rf ~/bin/vdiff && cp $WS/dotfiles/scripts/vdiff ~/bin/ && chmod +x ~/bin/vdiff
+rm -rf ~/.config/ranger/scope.sh && cp $WS/dotfiles/config/ranger/scope.sh ~/.config/ranger/ && chmod +x ~/.config/ranger/scope.sh
+rm -rf ~/.config/ranger/rc.conf && cp $WS/dotfiles/config/ranger/rc.conf ~/.config/ranger/
+
+sudo rm -rf /usr/local/bin/finch-notify && sudo cp $WS/dotfiles/scripts/finch-notify /usr/local/bin/
