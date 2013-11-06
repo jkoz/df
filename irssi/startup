@@ -1,2 +1,5 @@
 load xmpp
 run nicklist.pl
+run hilightwin.pl
+run notify.pl
+run adv_windowlist.pl

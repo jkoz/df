@@ -2,13 +2,13 @@ servers = (
   { address = "eu.irc6.net"; chatnet = "IRCnet"; port = "6667"; },
   { address = "open.ircnet.net"; chatnet = "IRCnet"; port = "6667"; },
   { address = "irc.efnet.org"; chatnet = "EFNet"; port = "6667"; },
-  {
+  { 
     address = "irc.undernet.org";
     chatnet = "Undernet";
     port = "6667";
   },
   { address = "irc.dal.net"; chatnet = "DALnet"; port = "6667"; },
-  {
+  { 
     address = "irc.quakenet.org";
     chatnet = "QuakeNet";
     port = "6667";
@@ -40,7 +40,7 @@ chatnets = {
     max_whois = "4";
     max_query_chans = "5";
   };
-  EFNet = {
+  EFNet = { 
     type = "IRC";
     max_kicks = "4";
     max_msgs = "3";
@@ -82,7 +82,7 @@ chatnets = {
     max_msgs = "3";
     max_whois = "30";
   };
-  Rizon = {
+  Rizon = { 
     type = "IRC";
     max_kicks = "1";
     max_msgs = "3";
@@ -95,10 +95,7 @@ chatnets = {
     max_whois = "30";
   };
   SILC = { type = "SILC"; };
-  GTalk = {
-    type = "XMPP";
-    nick = "phuoctaitp@gmail.com";
-  };
+  GTalk = { type = "XMPP"; nick = "phuoctaitp@gmail.com"; };
 };
 
 channels = (
@@ -265,32 +262,31 @@ statusbar = {
         topicbarend = { priority = "100"; alignment = "right"; };
       };
     };
+    awl_0 = {
+      items = {
+        barstart = { priority = "100"; };
+        awl_0 = { };
+        barend = { priority = "100"; alignment = "right"; };
+      };
+    };
   };
 };
 settings = {
   core = { real_name = "Unknown"; user_name = "jkoz"; nick = "jkoz"; };
   "fe-text" = { actlist_sort = "refnum"; };
   "fe-common/core" = {
-      theme = "default";
-      autocreate_own_query = "no";
-      autocreate_query_level = "DCCMSGS";
-      use_status_window = "no";
-      use_msgs_window = "no";
-      show_names_on_join = "yes";
-      autolog = "yes";
-      autolog_path = "~/.irssi/irclogs/$tag/$0.log";
-      print_active_channel = "yes";
-      awaylog_colors = "no";
-      completion_char = ",";
+    theme = "xchat";
+    autolog = "yes";
+    autolog_path = "~/.irssi/irclogs/$tag/$0.log";
   };
   "fe-common/xmpp" = {
-      xmpp_status_window = "yes";
-      xmpp_send_composing = "no";
+    xmpp_status_window = "yes";
+    xmpp_send_composing = "no";
   };
   "xmpp/core" = { xmpp_set_nick_as_username = "yes"; };
 };
 windows = {
-  1 = {
+  1 = { 
     immortal = "yes";
     name = "(status)";
     level = "ALL";
@@ -298,3 +294,4 @@ windows = {
   };
   2 = { name = "(GTalk)"; sticky = "yes"; parent = "1"; };
 };
+logs = { };
