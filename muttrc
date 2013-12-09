@@ -1,34 +1,68 @@
-# IMAP
-set folder = imaps://imap.gmail.com:993
-set imap_pass =
-set imap_user = phuoctaitp@gmail.com
-set spoolfile = +INBOX
-set postponed = "+[Google Mail]/Drafts"
-set ssl_force_tls = yes
+set realname = "Tai Tran Phuoc"
+set from = tptai@tma.com.vn
+set use_from = yes
+set envelope_from = yes
+set sendmail = msmtp
+set mbox_type=Maildir
+set spoolfile="~/mail/tptai@tma.com.vn/inbox/"
+set folder="~/mail/tptai@tma.com.vn/"
+set record="+sent"
+set postponed="+drafts"
 
-# SMTP
-set smtp_url = smtp://phuoctaitp@gmail.com@smtp.gmail.com:587/
-set smtp_pass =
-set from = phuoctaitp@gmail.com
-set realname = 'Tai Tran'
+mailboxes ! + `\
+for file in ~/mail/tptai@tma.com.vn/*; do \
+    box=$(basename "$file"); \
+    if [ ! "$box" = '.' -a ! "$box" = '..' -a ! "$box" = '.customflags' -a ! "$box" = '.subscriptions' ]; then \
+        echo -n "\"+$box\" "; \
+    fi; \
+done`
 
-# Display
+# Move spam to the Spam folder more easily
+macro index X "s=.Spam\n" "file as Spam"
+macro pager X "s=.Spam\n" "file as Spam"
+
+set sort = 'threads'
+set sort_aux = 'reverse-last-date-received'
+set auto_tag = yes
+ignore "Authentication-Results:"
+ignore "DomainKey-Signature:"
+ignore "DKIM-Signature:"
+hdr_order Date From To Cc
+alternative_order text/plain text/html *
+auto_view text/html
+
+set alias_file = ~/.muttrc.d/aliases
+source ~/.muttrc.d/aliases
+
+# Editor
 set editor = "vim -c 'set ft=mail'"
-#set index_format = "$HOME/.muttrc.d/muttdate '%[%s]' '%<%s>' |"
-set sort = threads
-set sort_aux = reverse-last-date-received
-set help = no
 
-# Files
 set header_cache = ~/.cache/mutt/headers
 set message_cachedir = ~/.cache/mutt/bodies
 set certificate_file = ~/.mutt.d/certificates
 
-# Bindings
-bind index <F5> imap-fetch-mail
-bind pager <up> previous-line
-bind pager <down> next-line
-bind index <delete> delete-message
-macro index <tab> "<change-folder>?"
-bind index,pager n next-unread
-
+#                   fore    back
+color   attachment  color61 color234
+color   header      color33 color234 "^(From|Subject|cc|date|To|X-Spam-Level|User-Agent|X-Mailer):"
+color   header      color27 color234 "^(Subject):"
+color   signature   color63 color234
+color   tree        color63 color234
+color   message     color37 color234
+color   status      color247 color235
+# normal color/body/
+color   normal      color244 color234
+color   error       color231 color196
+color   indicator   color254 color237
+color   markers     color37 color234
+color   index       color75 color234 ~O
+color   index       color75 color234 ~N
+color   index       color196 color23 ~D
+color   index       color196 color234 ~F
+color   index       color49 color234 ~T
+color   tilde       color63 color234
+color   quoted      color130 color234
+color   quoted1     color25 color234
+color   quoted2     color207 color234
+#color   body        color33 color234 "(http|https|ftp|news|telnet|finger|irc)://[^ \">\t\r\n]*"
+#color   body        color99 color234 "mailto:[-a-z_0-9.]+@[-a-z_0-9.]+"
+#color   body        color37 color234 "[;:=][-][)/(|]"

@@ -10,5 +10,6 @@ alias svndi='svn di --diff-cmd=diffwrap'
 
 # maven
 alias b='mvn clean install -Dtest'
-alias e='mvn eclipse:eclipse -o'
+alias e='mvn eclipse:clean eclipse:eclipse'
 #alias svn='~/bin/svnwrapper'
+

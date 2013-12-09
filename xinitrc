@@ -4,3 +4,4 @@ usermodmap=$HOME/.Xmodmap
 [ -f ~/.Xdefaults ] && xrdb ~/.Xdefaults
 
 exec openbox-session
+exec urxvt

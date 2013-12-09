@@ -23,7 +23,7 @@ URxvt*tintColor: Blue
 URxvt*transparent: false
 URxvt*foreground: Grey90
 URxvt*background: Grey11
-URxvt*font: -misc-fixed-medium-r-normal--15-140-75-75-c-90-iso10646-1
+URxvt*font: -Misc-Fixed-Medium-R-Normal--13-120-75-75-C-80-ISO10646-1
 URxvt*color4: RoyalBlue
 URxvt*color12: RoyalBlue
 URxvt*scrollBar: false

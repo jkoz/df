@@ -11,14 +11,6 @@ bindkey ^S history-incremental-pattern-search-forward
 bindkey '^p'    up-line-or-history
 bindkey '^n'    down-line-or-history
 
-# Map Ctrl-S to sth usefull other than XOFF (interrupt data flow).
-stty -ixon
-
-# Keep 1000 lines of history within the shell and save it to ~/.zsh_history:
-HISTSIZE=10000
-SAVEHIST=10000
-HISTFILE=~/.zsh_history
-
 # Use modern completion system
 autoload -Uz compinit
 compinit
@@ -40,12 +32,30 @@ zstyle ':completion:*' verbose true
 zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
 zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
 
+# Map Ctrl-S to sth usefull other than XOFF (interrupt data flow).
+stty -ixon
+
+# Keep 1000 lines of history within the shell and save it to ~/.zsh_history:
+HISTSIZE=10000
+SAVEHIST=10000
+HISTFILE=~/.zsh_history
+
 
 . ~/.bashrc
+
+autoenv_cd () {
+    builtin cd $@
+}
 
 ######################################################################################
 # oh my zsh
 ZSH=$HOME/.oh-my-zsh
-ZSH_THEME="ams"
-plugins=(ams autoenv git jira vi-mode svn)
+if test "$UID" -eq 0
+then
+    plugins=(git jira vi-mode svn safe-paste)
+    ZSH_THEME="imajes"
+else
+    plugins=(ams autoenv git jira vi-mode svn safe-paste)
+    ZSH_THEME="ams"
+fi
 source $ZSH/oh-my-zsh.sh

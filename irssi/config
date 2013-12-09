@@ -26,7 +26,7 @@ servers = (
   {
     address = "talk.google.com";
     use_ssl = "yes";
-    chatnet = "Gtalk";
+    chatnet = "GTalk";
     password = "";
     autoconnect = "yes";
   }
@@ -212,7 +212,6 @@ statusbar = {
         window = { };
         window_empty = { };
         lag = { priority = "-1"; };
-        act = { priority = "10"; };
         more = { priority = "-1"; alignment = "right"; };
         barend = { priority = "100"; alignment = "right"; };
       };
@@ -283,8 +282,24 @@ settings = {
     xmpp_status_window = "yes";
     xmpp_send_composing = "no";
   };
-  "xmpp/core" = { xmpp_set_nick_as_username = "yes"; };
+  "xmpp/core" = {
+    xmpp_set_nick_as_username = "yes";
+    xmpp_use_proxy = "on";
+    xmpp_proxy_address = "web2.tma.com.vn";
+    xmpp_proxy_port = "8080";
+    xmpp_proxy_type = "http";
+    xmpp_proxy_user = "tptai";
+    xmpp_proxy_user = "Cafe-Sua-Da-1?";
+  };
+
+  "perl/core/scripts" = {
+    awl_block = "-14";
+    awl_display_key = "$Q%K|$N%n $H$C$S";
+    awl_display_key_active = "$Q%K|$N%n $H%U$C%n$S";
+    awl_display_nokey = "[$N]$H$C$S";
+  };
 };
+logs = { };
 windows = {
   1 = { 
     immortal = "yes";
@@ -293,5 +308,9 @@ windows = {
     sticky = "yes";
   };
   2 = { name = "(GTalk)"; sticky = "yes"; parent = "1"; };
+  3 = { name = "(hilight)"; sticky = "yes"; };
 };
-logs = { };
+mainwindows = {
+  1 = { first_line = "42"; lines = "69"; };
+  3 = { first_line = "1"; lines = "41"; };
+};

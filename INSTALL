@@ -1,22 +1,33 @@
 #!/bin/bash
-
+echo ">>> Redeploy dotfiles configurations..."
 if test -z "$WS"; then WS=$1; fi
 
 rm -f ~/.vimrc && cp $WS/dotfiles/vimrc ~/.vimrc
+#rm -f ~/.vimrc.local && cp $WS/dotfiles/vimrc.local ~/.vimrc.local
+#rm -f ~/.vimrc.bundles.local && cp $WS/dotfiles/vimrc.bundles.local ~/.vimrc.bundles.local
 rm -f ~/.gvimrc && cp $WS/dotfiles/gvimrc ~/.gvimrc
 rm -f ~/.tmux.conf && cp $WS/dotfiles/tmux.conf ~/.tmux.conf
 rm -rf ~/.bashrc && cp $WS/dotfiles/bashrc ~/.bashrc
 rm -rf ~/.bashrc.d && cp -R $WS/dotfiles/bashrc.d ~/.bashrc.d
 rm -f ~/.muttrc && cp $WS/dotfiles/muttrc ~/.muttrc
-rm -rf ~/.muttrc.d && cp -R $WS/dotfiles/muttrc.d ~/.muttrc.d
 rm -f ~/.inputrc && cp $WS/dotfiles/inputrc ~/.inputrc
 rm -f ~/.dircolors && cp $WS/dotfiles/dircolors ~/.dircolors
 rm -f ~/.cmd && cp $WS/dotfiles/cmd ~/.cmd
 rm -f ~/.xinitrc && cp $WS/dotfiles/xinitrc ~/.xinitrc
 rm -f ~/.bash_profile && cp $WS/dotfiles/bash_profile ~/.bash_profile
 rm -f ~/.Xdefaults && cp $WS/dotfiles/Xdefaults ~/.Xdefaults
+rm -rf ~/.procmailrc && cp $WS/dotfiles/procmailrc ~/.procmailrc
+#rm -rf ~/.fetchmailrc && cp $WS/dotfiles/fetchmailrc ~/.fetchmailrc && chmod 700 ~/.fetchmailrc
 #rm -f ~/.Xmodmap && cp $WS/dotfiles/Xmodmap ~/.Xmodmap
 rm -f ~/.zshrc && cp $WS/dotfiles/zshrc ~/.zshrc
+rm -rf ~/.vrapperrc && cp $WS/dotfiles/vrapperrc ~/.vrapperrc
+rm -rf ~/.irssi/startup && cp $WS/dotfiles/irssi/startup ~/.irssi/
+rm -rf ~/.irssi/config && cp $WS/dotfiles/irssi/config ~/.irssi/
+rm -rf ~/.irssi/scripts/ && cp -R $WS/dotfiles/irssi/scripts ~/.irssi/
+rm -rf ~/.irssi/*.theme && cp $WS/dotfiles/irssi/xchat.theme ~/.irssi/
+rm -rf ~/.screenrc && cp $WS/dotfiles/screenrc ~/.screenrc
+
+mkdir -p ~/.muttrc.d/
 
 # window managers
 rm -f ~/.config/openbox/autostart.sh && cp $WS/dotfiles/config/openbox/autostart.sh ~/.config/openbox/
@@ -31,4 +42,6 @@ rm -rf ~/bin/vdiff && cp $WS/dotfiles/scripts/vdiff ~/bin/ && chmod +x ~/bin/vdi
 rm -rf ~/.config/ranger/scope.sh && cp $WS/dotfiles/config/ranger/scope.sh ~/.config/ranger/ && chmod +x ~/.config/ranger/scope.sh
 rm -rf ~/.config/ranger/rc.conf && cp $WS/dotfiles/config/ranger/rc.conf ~/.config/ranger/
 
-sudo rm -rf /usr/local/bin/finch-notify && sudo cp $WS/dotfiles/scripts/finch-notify /usr/local/bin/
+# RUN WITH ROOT
+#sudo rm -rf /usr/local/bin/finch-notify && sudo cp $WS/dotfiles/scripts/finch-notify /usr/local/bin/
+#test -d /usr/lib64/urxvt/perl && sudo cp -rf $WS/dotfiles/scripts/urxvt/clipboard /usr/lib64/urxvt/perl/

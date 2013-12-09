@@ -3,3 +3,5 @@ run nicklist.pl
 run hilightwin.pl
 run notify.pl
 run adv_windowlist.pl
+run history_search.pl
+bind ^R /history_search

@@ -20,56 +20,26 @@ ab #c "1}}}---------------------------------------------------------------------
 ab #b #-------------------------------------------------------------------------------
 ab #e #1}}}---------------------------------------------------------------------------
 
+" init vundle
+se nocompatible
+filetype off
+set rtp+=~/.vim/bundle/vundle/
+call vundle#rc()
 
-" Init bundles in $HOME/.vim/bundle that will be used: {{{1
-" ------------------------------------------------------------------------------
-let g:viml_bundles = '$PROJ/viml'
-let g:pathogen_bundles = [
-            \ 'vim-pathogen',
-            \ 'Colour-Sampler-Pack',
-            \ 'Tagbar',
-            \ 'ack.vim',
-            \ 'vim-ctrlp-commandline',
-            \ 'vim-ctrlp-unicode',
-            \ 'ctrlp.vim',
-            \ 'vim-matchit',
-            \ 'nerdcommenter',
-            \ 'nerdtree',
-            \ 'snipmate.vim',
-            \ 'vcscommand.vim',
-            \ 'vim-fugitive',
-            \ 'vim-surround',
-            \ 'DirDiff.vim',
-            \ 'clang_complete',
-            \ 'dbext.vim',
-            \ ]
-            "\ 'vim-powerline',
-            "\ 'cppcomplete',
-            "\ 'vim-irblack',
-            "\ 'javacomplete'
-            "\ 'vim-eclim',
+Bundle 'gmarik/vundle'
+Bundle 'kien/ctrlp.vim'
+Bundle 'scrooloose/nerdtree'
+Bundle 'scrooloose/nerdcommenter'
+Bundle 'spf13/vim-colors'
+Bundle 'scrooloose/nerdcommenter'
+Bundle 'vim-scripts/dbext.vim'
+Bundle 'ervandew/eclim'
 
-fu! DeployBundle()
-    echom system('rm -rf $HOME/.vim/bundle/*')
-    echom system('mkdir -p $HOME/.vim/bundle')
-    for bundle in g:pathogen_bundles
-        let l:cmd= 'cp -R ' . g:viml_bundles . '/' . bundle . ' $HOME/.vim/bundle/' . bundle
-        echom l:cmd
-        echom system(l:cmd)
-    endfo
-endf
-com! DeployBundle cal DeployBundle()
-"1}}}---------------------------------------------------------------------------
-
-
-" Pathogen {{{1
-ru bundle/vim-pathogen/autoload/pathogen.vim
-call pathogen#infect()
-call pathogen#helptags()
+"Bundle 'tpope/vim-fugitive'
+"Bundle 'Lokaltog/vim-easymotion'
 
 filetype plugin indent on
 syntax on
-"1}}}---------------------------------------------------------------------------
 
 
 " Session: Mappings {{{1
@@ -138,12 +108,12 @@ nma Q gqap
 nn <leader>f :%s/\s\+$//<cr>
 
 nn <leader>0 :GenerateTagsJ "%:p:h"<cr>
+
 "1}}}---------------------------------------------------------------------------
 
 
 " Section: Options:{{{1
 "-------------------------------------------------------------------------------
-se nocompatible
 
 if v:version >= 600
     se autoread
@@ -164,6 +134,7 @@ if has("multi_byte")
 en
 
 
+se relativenumber
 se t_Co=256
 se sw=4
 se autowrite
@@ -219,7 +190,7 @@ se softtabstop=4 shiftwidth=4 tabstop=4 " not tabs, but spaces
 se expandtab
 se shiftround " use multiple of shiftwidth when indenting with '<' and '>'
 
-"se number " turn on number
+se number " turn on number
 se cursorline " highlight current light
 " se cursorcolumn
 
@@ -261,16 +232,17 @@ se stl+=\|\ %<%P
 "se stl=\ %F%m%r%h\ %w\ \ \ %r%{getcwd()}%h\ \ \ %=%-33.(Line\ %l\ of\ %L\ \|\ Column\ %c%V\ \|\ (%P)%)
 
 " completeopt
-se cot=longest,menuone
+"se cot=longest,menuone
 "set completeopt=menuone,menu,longest,preview
 se dict=/usr/share/dict/cracklib-small,$HOME/.commands_tags
 
 "colo default
 
-se background=dark
 "colo peaksea
-colo wombat256mod
-"hi CursorLine cterm=NONE ctermbg=237  guibg=#404040 gui=NONE
+"colo wombat256mod
+se background=dark
+colo peaksea
+hi CursorLine cterm=NONE ctermbg=237  guibg=#404040 gui=NONE
 "hi CursorColumn cterm=NONE ctermbg=237  guibg=#404040 gui=NONE
 hi StatusLine cterm=NONE ctermbg=237 ctermfg=226  guibg=#404040 guifg=#ffff00
 "hi SignColumn cterm=NONE ctermbg=237  guibg=#404040 gui=NONE
@@ -325,16 +297,15 @@ aug group_file
     au!
     "au BufRead,BufNewFile *.html,*.xhtml,*.xml se softtabstop=2 shiftwidth=2 tabstop=2
     au BufRead,BufNewFile *.html,*.xhtml,*.xml setl foldmethod=indent
-    au BufRead,BufNewFile soaps.xml setl foldmethod=marker
     au BufRead,BufNewFile *.c,*.h,*.cpp for each in split(expand('~/.tags/usr-include*'), "\n") | exe "se tags+=" . each | endfo
 aug END
 
-au FileType css setl omnifunc=csscomplete#CompleteCSS
-au FileType html,markdown setl omnifunc=htmlcomplete#CompleteTags
-au FileType javascript setl omnifunc=javascriptcomplete#CompleteJS
-au FileType python setl omnifunc=pythoncomplete#Complete
-au FileType java setl omnifunc=javacomplete#Complete
-au FileType ruby setl omnifunc=rubycomplete#Complete
+"au FileType css setl omnifunc=csscomplete#CompleteCSS
+"au FileType html,markdown setl omnifunc=htmlcomplete#CompleteTags
+"au FileType javascript setl omnifunc=javascriptcomplete#CompleteJS
+"au FileType python setl omnifunc=pythoncomplete#Complete
+"au FileType ruby setl omnifunc=rubycomplete#Complete
+"au FileType java setl omnifunc=javacomplete#Complete
 "au FileType xml setl omnifunc=xmlcomplete#CompleteTags
 
 "let g:xml_syntax_folding=1
@@ -401,13 +372,14 @@ let g:ctrlp_max_height = 30
 let g:ctrlp_clear_cache_on_exit=0
 let g:ctrlp_use_caching = 0
 
-nn <silent> <Leader>r :CtrlP .<CR>
+nn <silent> <Leader>p :CtrlP .<CR>
 nn <silent> <Leader>o :CtrlPBufTag<CR>
 nn <silent> <Leader>i :CtrlPTag<CR>
 nn <silent> <Leader>l :CtrlPLine<CR>
-nn <silent> <Leader>e :CtrlPBuffer<CR>
+nn <silent> <Leader>z :CtrlPBuffer<CR>
 nn <silent> <Leader>m :CtrlPMRUFiles<CR>
 nn <silent> <Leader>j :CtrlPRTS<CR>
+nn <silent> <Leader>b :CtrlPBookmarkDir<CR>
 
 let pats = ['\**\([\/?_.0-9A-Za-z]\+\)\([\/]*\)\**\(\\\@<!,\|$\)', '\.', '\\\@<!,']
 let subs = ['\1\2\3', '\\.', '.*|.*']
@@ -421,19 +393,19 @@ let g:ctrlp_user_command='find %s -type f -regextype posix-extended -not -regex 
 
 "CtrlP Command line history
 com! CtrlPCommandline cal ctrlp#init(ctrlp#commandline#id())
-nn <silent> <Leader>a :CtrlPCommandline<CR>
+nn <silent> <Leader>q :CtrlPCommandline<CR>
 com! CtrlPUnicode call ctrlp#init(ctrlp#unicode#id())
 "2}}}---------------------------------------------------------------------------
 
 
 " Bundle: CppOmniComplete {{{2
-let OmniCpp_NamespaceSearch = 1
-let OmniCpp_GlobalScopeSearch = 1
-let OmniCpp_ShowAccess = 1
-let OmniCpp_MayCompleteDot = 1
-let OmniCpp_MayCompleteArrow = 1
-let OmniCpp_MayCompleteScope = 1
-let OmniCpp_DefaultNamespaces = ["std", "_GLIBCXX_STD"]
+"let OmniCpp_NamespaceSearch = 1
+"let OmniCpp_GlobalScopeSearch = 1
+"let OmniCpp_ShowAccess = 1
+"let OmniCpp_MayCompleteDot = 1
+"let OmniCpp_MayCompleteArrow = 1
+"let OmniCpp_MayCompleteScope = 1
+"let OmniCpp_DefaultNamespaces = ["std", "_GLIBCXX_STD"]
 "2}}}---------------------------------------------------------------------------
 
 

@@ -8,14 +8,22 @@ export HISTSIZE=10000
 export HISTIGNORE="&:[ ]*:exit"
 export GREP_OPTIONS="--color"
 
-export XMODIFIERS=@im=SCIM
-export GTK_IM_MODULE=xim
-export QT_IM_MODULE=xim
+#export XMODIFIERS=@im=SCIM
 
+export XMODIFIERS="@im=unikey"
+export GTK_IM_MODULE="xim"
+export QT_IM_MODULE=xim
+export BROWSER=/opt/chromium/chrome
+export LANG=en_US.UTF-8
+export LC_CTYPE=en_US.UTF-8
 
 #shopt -s histappend # append history file
 
-test "$UID" -eq 0 && export PS1="\e[01;31m# \e[0m" || export PS1="$ "
+#test "$UID" -eq 0 && export PS1="\e[01;31m# \e[0m" || export PS1="$ "
+
+if [ -n "$DISPLAY" ]; then
+    BROWSER=/opt/chromium/chrome
+fi
 
 export EDITOR="vim"
 
