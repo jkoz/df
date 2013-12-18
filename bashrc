@@ -46,3 +46,7 @@ export PROJ=$HOME/projects
 for file in `find ~/.bashrc.d/ -type f | grep bash$`; do
     . "$file"
 done
+
+if [ -z "$DISPLAY" ] && [ "$TTY" = "/dev/tty1" ]; then
+    startx
+fi

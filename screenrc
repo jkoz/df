@@ -33,8 +33,10 @@ screen -t zsh2
 
 bind ^c eval writebuf "exec sh -c 'xsel -bi < /tmp/screen-exchange'"
 bind ^v eval "exec sh -c 'xsel -bo > /tmp/screen-exchange'" readbuf
-#bind \" split
+bind \" split
 bind '/' eval "scrollback 0" "scrollback 15000" "clear"
+bind k eval focus
+bind j eval focus
 
 
 #rvm needs this

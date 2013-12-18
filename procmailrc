@@ -1,11 +1,11 @@
 SHELL="/bin/bash"
 PATH="/usr/sbin:/usr/bin"
-MAILDIR="$HOME/Mail/"
+MAILDIR="$HOME/mail/tptai@tma.com.vn/inbox/new"
 DEFAULT=$MAILDIR
 LOGFILE="$HOME/.procmail.log"
 LOG=""
 VERBOSE=yes
 
 :0:
-*^Subject:.*(Linux)
-$MAILDIR/Linux/
+*^From:.*(greetings@tma.com.vn)
+$HOME/mail/tptai@tma.com.vn/greetings/new
