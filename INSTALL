@@ -17,7 +17,6 @@ rm -f ~/.xinitrc && cp $WS/dotfiles/xinitrc ~/.xinitrc
 rm -f ~/.bash_profile && cp $WS/dotfiles/bash_profile ~/.bash_profile
 rm -f ~/.Xdefaults && cp $WS/dotfiles/Xdefaults ~/.Xdefaults
 rm -rf ~/.procmailrc && cp $WS/dotfiles/procmailrc ~/.procmailrc
-#rm -rf ~/.fetchmailrc && cp $WS/dotfiles/fetchmailrc ~/.fetchmailrc && chmod 700 ~/.fetchmailrc
 #rm -f ~/.Xmodmap && cp $WS/dotfiles/Xmodmap ~/.Xmodmap
 rm -f ~/.zshrc && cp $WS/dotfiles/zshrc ~/.zshrc
 rm -rf ~/.vrapperrc && cp $WS/dotfiles/vrapperrc ~/.vrapperrc
