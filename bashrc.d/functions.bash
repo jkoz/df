@@ -1,3 +1,4 @@
+# useage fetchmailrc_tptai_at_tma_com_vn | fetchmailrc -k -f -
 fetchmailrc_tptai_at_tma_com_vn () {
     stty -echo
     read pw
