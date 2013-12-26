@@ -13,5 +13,6 @@ alias irssi='TERM=screen-256color irssi'
 # maven
 alias b='mvn clean install -Dtest'
 alias e='mvn eclipse:clean eclipse:eclipse'
+alias xlock='xlock -mode blank'
 #alias svn='~/bin/svnwrapper'
 

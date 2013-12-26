@@ -91,6 +91,7 @@ nn <leader>p "+p
 
 " clear search match
 nn <leader><space> :nohl<cr>
+nn q :q<cr>
 
 " copy full directory path of opened file to clipboard
 nmap cpd :let @+ = expand("%:p:h")<CR>
@@ -271,6 +272,10 @@ fu! GenerateTags(url, ctags_opts)
     exe 'cd ' . a:url
 endf
 
+fu! AppendToFile(file, lines)
+    call writefile(readfile(a:file)+a:lines, a:file)
+endf
+
 com! -n=1 -com=file GenerateTagsC cal GenerateTags(<q-args>,"-R --c++-kinds=+p --fields=+iaS --extra=+q --sort=foldcase --language-force=C++")
 com! -n=1 -com=file GenerateTagsJ cal GenerateTags(<q-args>,"-R --java-kinds=+p --fields=+iaS --extra=+q")
 
@@ -375,10 +380,10 @@ let g:ctrlp_use_caching = 0
 nn <silent> <Leader>p :CtrlP .<CR>
 nn <silent> <Leader>o :CtrlPBufTag<CR>
 nn <silent> <Leader>i :CtrlPTag<CR>
-nn <silent> <Leader>l :CtrlPLine<CR>
+"nn <silent> <Leader>l :CtrlPLine<CR>
 nn <silent> <Leader>z :CtrlPBuffer<CR>
 nn <silent> <Leader>m :CtrlPMRUFiles<CR>
-nn <silent> <Leader>j :CtrlPRTS<CR>
+"nn <silent> <Leader>j :CtrlPRTS<CR>
 nn <silent> <Leader>b :CtrlPBookmarkDir<CR>
 
 let pats = ['\**\([\/?_.0-9A-Za-z]\+\)\([\/]*\)\**\(\\\@<!,\|$\)', '\.', '\\\@<!,']
@@ -416,6 +421,39 @@ let g:dbext_default_profile_192_168_95_111_NI='type=MYSQL:user=root:passwd=mysql
 let g:dbext_default_profile_192_168_99_246_NI='type=MYSQL:user=root:passwd=mysql:dbname=NI:host=192.168.99.246'
 "2}}}---------------------------------------------------------------------------
 
+" Bundle: Eclim {{{2
+nn <silent> <Leader>l :LocateFile<CR>
+nn <silent> <Leader>s :JavaSearchContext<CR>
+nn <silent> <Leader>t :ProjectsTree<CR>
+let g:EclimJavaSearchSingleResult='edit'
+
+com! DoSetBreakPoint cal SetBreakPoint()
+nn <silent> sbp :DoSetBreakPoint<CR>
+
+com! DoClearAllBreakPoint cal ClearAllBreakPoint()
+
+nm cpb :let @+ = GetBreakPoint()<CR>
+nm cpq :let @+ = GetQualiedName()<cr>
+
+fu! GetBreakPoint()
+    return 'stop at ' . GetQualiedName() . ':' . line(".")
+endf
+
+fu! ClearAllBreakPoint()
+    call writefile([], $HOME . "/.jdbrc")
+endf
+
+fu! SetBreakPoint()
+    call AppendToFile($HOME . "/.jdbrc", [GetBreakPoint()])
+endf
+
+fu! GetQualiedName()
+    let l:bp = substitute(split(getline("1"))[1], ';', '.', '')
+    let l:bp = l:bp . substitute(expand('%:t'), '.java', '', '')
+    return l:bp
+endf
+
+" 2}}}
 
 "1}}}---------------------------------------------------------------------------
 

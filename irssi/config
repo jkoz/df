@@ -2,13 +2,13 @@ servers = (
   { address = "eu.irc6.net"; chatnet = "IRCnet"; port = "6667"; },
   { address = "open.ircnet.net"; chatnet = "IRCnet"; port = "6667"; },
   { address = "irc.efnet.org"; chatnet = "EFNet"; port = "6667"; },
-  { 
+  {
     address = "irc.undernet.org";
     chatnet = "Undernet";
     port = "6667";
   },
   { address = "irc.dal.net"; chatnet = "DALnet"; port = "6667"; },
-  { 
+  {
     address = "irc.quakenet.org";
     chatnet = "QuakeNet";
     port = "6667";
@@ -23,13 +23,6 @@ servers = (
   { address = "irc.rizon.net"; chatnet = "Rizon"; port = "6667"; },
   { address = "irc.link-net.org"; chatnet = "LinkNet"; port = "6667"; },
   { address = "silc.silcnet.org"; chatnet = "SILC"; port = "706"; },
-  {
-    address = "talk.google.com";
-    use_ssl = "yes";
-    chatnet = "GTalk";
-    password = "";
-    autoconnect = "yes";
-  }
 );
 
 chatnets = {
@@ -40,7 +33,7 @@ chatnets = {
     max_whois = "4";
     max_query_chans = "5";
   };
-  EFNet = { 
+  EFNet = {
     type = "IRC";
     max_kicks = "4";
     max_msgs = "3";
@@ -64,7 +57,7 @@ chatnets = {
     max_msgs = "3";
     max_whois = "30";
   };
-  OFTC = { 
+  OFTC = {
     type = "IRC";
     max_kicks = "1";
     max_msgs = "3";
@@ -82,7 +75,7 @@ chatnets = {
     max_msgs = "3";
     max_whois = "30";
   };
-  Rizon = { 
+  Rizon = {
     type = "IRC";
     max_kicks = "1";
     max_msgs = "3";
@@ -95,7 +88,6 @@ chatnets = {
     max_whois = "30";
   };
   SILC = { type = "SILC"; };
-  GTalk = { type = "XMPP"; nick = "phuoctaitp@gmail.com"; };
 };
 
 channels = (
@@ -278,39 +270,27 @@ settings = {
     autolog = "yes";
     autolog_path = "~/.irssi/irclogs/$tag/$0.log";
   };
-  "fe-common/xmpp" = {
-    xmpp_status_window = "yes";
-    xmpp_send_composing = "no";
-  };
-  "xmpp/core" = {
-    xmpp_set_nick_as_username = "yes";
-    xmpp_use_proxy = "on";
-    xmpp_proxy_address = "web2.tma.com.vn";
-    xmpp_proxy_port = "8080";
-    xmpp_proxy_type = "http";
-    xmpp_proxy_user = "tptai";
-    xmpp_proxy_user = "Cafe-Sua-Da-1?";
-  };
 
   "perl/core/scripts" = {
     awl_block = "-14";
     awl_display_key = "$Q%K|$N%n $H$C$S";
     awl_display_key_active = "$Q%K|$N%n $H%U$C%n$S";
     awl_display_nokey = "[$N]$H$C$S";
+    nicklist_height = "73";
+    nicklist_width = "20";
   };
 };
 logs = { };
 windows = {
-  1 = { 
+  1 = {
     immortal = "yes";
     name = "(status)";
     level = "ALL";
     sticky = "yes";
   };
-  2 = { name = "(GTalk)"; sticky = "yes"; parent = "1"; };
-  3 = { name = "(hilight)"; sticky = "yes"; };
+  2 = { name = "(hilight)"; sticky = "yes"; };
 };
-mainwindows = {
-  1 = { first_line = "42"; lines = "69"; };
-  3 = { first_line = "1"; lines = "41"; };
-};
+#mainwindows = {
+#  1 = { first_line = "61"; lines = "69"; };
+#  2 = { first_line = "1"; lines = "60"; };
+#};

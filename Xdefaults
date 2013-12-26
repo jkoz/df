@@ -20,9 +20,14 @@ XTerm*pointerColorBackground: black
 !VT100.modifyCursorKeys:0
 
 URxvt*tintColor: Blue
-URxvt*transparent: false
-URxvt*foreground: Grey90
+!URxvt*transparent: true
+!URxvt*shading: 50
+!URxvt.depth: 32
+!URxvt.background: rgba:1111/1111/1111/dddd
+!URxvt.background: [95]#000000
+URxvt*geometry: 159x57
 URxvt*background: Grey11
+URxvt*foreground: Grey90
 URxvt*font: -Misc-Fixed-Medium-R-Normal--13-120-75-75-C-80-ISO10646-1
 URxvt*color4: RoyalBlue
 URxvt*color12: RoyalBlue

@@ -712,10 +712,10 @@
                 <decor>no</decor>
                 <focus>yes</focus>
                 <position>
-                    <x>center</x>
-                    <y>20</y>
+                    <x>0</x>
+                    <y>0</y>
                 </position>
-                <maximized>true</maximized>
+                <!--<maximized>true</maximized>-->
             </application>
     </applications>
 
