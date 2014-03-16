@@ -508,6 +508,9 @@ timedatectl list-timezones
 
 #-ntp syn time
 ntpd -q
+
+#-ubuntu-package
+apt-cache search pkg_name
 # 1}}}
 
 #-systemd-systemctl {{{1

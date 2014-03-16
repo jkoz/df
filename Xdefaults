@@ -19,6 +19,10 @@ XTerm*pointerColorBackground: black
 
 !VT100.modifyCursorKeys:0
 
+Xcursor.theme: DMZ-White
+!Xcursor.size: 20
+ldoce5-bin.iconFile: /opt/ldoce5/splash.xpm
+
 URxvt*tintColor: Blue
 !URxvt*transparent: true
 !URxvt*shading: 50
@@ -35,7 +39,7 @@ URxvt*scrollBar: false
 URxvt*scrollBar_right: true
 URxvt*scrollstyle: rxvt
 URxvt*termName: xterm-256color
-URxvt.iconFile: /usr/share/icons/crystalsvg/16x16/apps/terminal.png
+URxvt.iconFile: /usr/share/icons/Humanity/apps/16/terminal.svg
 URxvt.keysym.Shift-Control-V: perl:clipboard:paste
 URxvt.iso14755: false
 URxvt.perl-ext-common: default,tabbed,clipboard

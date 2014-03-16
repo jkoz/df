@@ -1,21 +1,21 @@
 #!/bin/bash
 echo "INSTALL linux environment"
-install -d ~/bin ~/.bashrc.d ~/.muttrc.d ~/.irssi/scripts ~/.config/openbox ~/.config/ranger
+install -d ~/bin ~/.bashrc.d ~/.muttrc.d ~/.irssi ~/.irssi/scripts ~/.config/openbox ~/.config/ranger
 
 # editor
 install -Dm644 vimrc ~/.vimrc
-install -Dm644 gvimrc ~/.gvimrc
-install -Dm644 vrapperrc ~/.vrapperrc
+#install -Dm644 gvimrc ~/.gvimrc
+#install -Dm644 vrapperrc ~/.vrapperrc
 
 # termial
 install -Dm644 tmux.conf ~/.tmux.conf
-install -Dm644 dircolors ~/.dircolors
-install -Dm644 inputrc ~/.inputrc
-install -Dm644 screenrc ~/.screenrc
+#install -Dm644 dircolors ~/.dircolors
+#install -Dm644 inputrc ~/.inputrc
+#install -Dm644 screenrc ~/.screenrc
 
 # shell
-install -Dm644 bash_profile ~/.bash_profile
-install -Dm644 bashrc ~/.bashrc
+#install -Dm644 bash_profile ~/.bash_profile
+#install -Dm644 bashrc ~/.bashrc
 install -Dm644 bashrc.d/* ~/.bashrc.d
 install -Dm644 zshrc ~/.zshrc
 
@@ -33,8 +33,6 @@ install -Dm644 Xdefaults ~/.Xdefaults
 install -Dm644 irssi/scripts/* ~/.irssi/scripts
 install -Dm644 irssi/* ~/.irssi
 
-# misc, commands
-rm -f ~/.cmd && cp $WS/dotfiles/cmd ~/.cmd
 # wm
 install -Dm644 config/openbox/* ~/.config/openbox
 install -Dm644 config/tint2/* ~/.config/tint2

@@ -40,12 +40,30 @@ HISTSIZE=10000
 SAVEHIST=10000
 HISTFILE=~/.zsh_history
 
+export EDITOR="vim"
 
-. ~/.bashrc
+# x
+[ -n "$DISPLAY" ] && xset r rate 300 50
 
 autoenv_cd () {
     builtin cd $@
 }
+
+#scim
+export XMODIFIERS=@im=SCIM
+export GTK_IM_MODULE="scim"
+export QT_IM_MODULE="scim"
+
+# aliases
+alias l='ls --color=auto'
+alias ll='ls -la --color=auto'
+alias ..="cd .."
+alias ...="cd ../.."
+alias ....="cd ../../.."
+alias mutt='TERM=screen-256color mutt'
+alias irssi='TERM=screen-256color irssi'
+alias b='mvn clean install -Dtest'
+alias e='mvn eclipse:clean eclipse:eclipse'
 
 ######################################################################################
 # oh my zsh

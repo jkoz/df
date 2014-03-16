@@ -4,7 +4,6 @@
   Copy the file to $HOME/.config/openbox/ instead. -->
 
 <openbox_config xmlns="http://openbox.org/3.4/rc">
-
     <resistance>
         <strength>10</strength>
         <screen_edge_strength>20</screen_edge_strength>
@@ -42,7 +41,7 @@
     </placement>
 
     <theme>
-        <name>Clearlooks</name>
+        <name>TropicBomb</name>
         <titleLayout>NLIMC</titleLayout>
         <!--
           available characters are NDSLIMC, each can occur at most once.
@@ -54,57 +53,57 @@
           S: shade (roll up/down)
           D: omnipresent (on all desktops).
         -->
-        <keepBorder>yes</keepBorder>
+        <keepBorder>no</keepBorder>
         <animateIconify>yes</animateIconify>
         <font place="ActiveWindow">
-            <name>sans</name>
-            <size>8</size>
+            <name>Verdana</name>
+            <size>10</size>
             <!-- font size in points -->
-            <weight>bold</weight>
+            <weight>Normal</weight>
             <!-- 'bold' or 'normal' -->
-            <slant>normal</slant>
+            <slant>Normal</slant>
             <!-- 'italic' or 'normal' -->
         </font>
         <font place="InactiveWindow">
-            <name>sans</name>
-            <size>8</size>
+            <name>Verdana</name>
+            <size>10</size>
             <!-- font size in points -->
-            <weight>bold</weight>
+            <weight>Normal</weight>
             <!-- 'bold' or 'normal' -->
-            <slant>normal</slant>
+            <slant>Normal</slant>
             <!-- 'italic' or 'normal' -->
         </font>
         <font place="MenuHeader">
-            <name>sans</name>
+            <name>Verdana</name>
             <size>9</size>
-            <!-- font size in points -->
-            <weight>normal</weight>
-            <!-- 'bold' or 'normal' -->
-            <slant>normal</slant>
-            <!-- 'italic' or 'normal' -->
+            <weight>Normal</weight>
+            <slant>Normal</slant>
         </font>
         <font place="MenuItem">
-            <name>sans</name>
+            <name>Verdana</name>
             <size>9</size>
             <!-- font size in points -->
-            <weight>normal</weight>
+            <weight>Normal</weight>
             <!-- 'bold' or 'normal' -->
-            <slant>normal</slant>
+            <slant>Normal</slant>
             <!-- 'italic' or 'normal' -->
         </font>
-        <font place="OnScreenDisplay">
-            <name>sans</name>
+        <font place="ActiveOnScreenDisplay">
+            <name>Verdana</name>
             <size>9</size>
-            <!-- font size in points -->
-            <weight>bold</weight>
-            <!-- 'bold' or 'normal' -->
-            <slant>normal</slant>
-            <!-- 'italic' or 'normal' -->
+            <weight>Bold</weight>
+            <slant>Normal</slant>
+        </font>
+        <font place="InactiveOnScreenDisplay">
+            <name>Verdana</name>
+            <size>8</size>
+            <weight>Normal</weight>
+            <slant>Normal</slant>
         </font>
     </theme>
 
     <desktops>
-        <!-- this stuff is only used at startup, pagers allow you to change them
+    <!-- this stuff is only used at startup, pagers allow you to change them
           during a session
 
           these are default values to use when other ones are not already set
@@ -112,13 +111,12 @@
 
           use obconf if you want to change these without having to log out
           and back in -->
-        <number>1</number>
+        <number>2</number>
         <firstdesk>1</firstdesk>
         <names>
-            <!-- set names up here if you want to, like this:
-              <name>desktop 1</name>
-                  <name>desktop 2</name>
-                  -->
+            <!--set names up here if you want to, like this:-->
+            <name>1</name>
+            <name>2</name>
         </names>
         <popupTime>875</popupTime>
         <!-- The number of milliseconds to show the popup for when switching
@@ -637,10 +635,10 @@
         <!--# this is an example with comments through out. use these to make your-->
         <!--# own rules, but without the comments of course.-->
         <!--<application name="first element of window's WM_CLASS property (see xprop)"-->
-                <!--class="second element of window's WM_CLASS property (see xprop)"-->
-                <!--role="the window's WM_WINDOW_ROLE property (see xprop)"-->
-                <!--type="the window's _NET_WM_WINDOW_TYPE (if unspecified, then-->
-                <!--it is dialog for child windows)">-->
+            <!--class="second element of window's WM_CLASS property (see xprop)"-->
+            <!--role="the window's WM_WINDOW_ROLE property (see xprop)"-->
+            <!--type="the window's _NET_WM_WINDOW_TYPE (if unspecified, then-->
+            <!--it is dialog for child windows)">-->
             <!--# the name or the class can be set, or both. this is used to match-->
             <!--# windows when they appear. role can optionally be set as well, to-->
             <!--# further restrict your matches.-->
@@ -679,7 +677,7 @@
                     <!--<monitor>1</monitor>-->
                     <!--# specifies the monitor in a xinerama setup.-->
                     <!--# 1 is the first head, or 'mouse' for wherever the mouse is-->
-                <!--</position>-->
+                    <!--</position>-->
 
                 <!--<focus>yes</focus>-->
                 <!--# if the window should try be given focus when it appears. if this is set-->
@@ -707,16 +705,16 @@
 
                 <!--<maximized>true</maximized>-->
                 <!--# 'Horizontal', 'Vertical' or boolean (yes/no)-->
-            <!--</application>-->
+                <!--</application>-->
             <application name="urxvt">
-                <decor>no</decor>
+                <decor>yes</decor>
                 <focus>yes</focus>
-                <position>
-                    <x>0</x>
-                    <y>0</y>
-                </position>
+                <!--<position>-->
+                    <!--<x>10</x>-->
+                    <!--<y>10</y>-->
+                    <!--</position>-->
                 <!--<maximized>true</maximized>-->
             </application>
-    </applications>
+        </applications>
 
 </openbox_config>
