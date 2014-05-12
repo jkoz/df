@@ -31,15 +31,30 @@ Bundle 'kien/ctrlp.vim'
 Bundle 'scrooloose/nerdtree'
 Bundle 'scrooloose/nerdcommenter'
 Bundle 'spf13/vim-colors'
-Bundle 'scrooloose/nerdcommenter'
 Bundle 'vim-scripts/dbext.vim'
-Bundle 'ervandew/eclim'
+Bundle 'Lokaltog/vim-easymotion'
+Bundle 'bling/vim-airline'
+Bundle 'tpope/vim-surround'
+Bundle 'vim-scripts/vcscommand.vim'
+Bundle 'vim-scripts/Colortest'
+Bundle 'majutsushi/tagbar'
+Bundle 'gavinbeatty/dragvisuals.vim'
+Bundle 'tpope/vim-fugitive'
 
+Bundle 'klen/python-mode'
+Bundle 'naquad/ctrlp-digraphs.vim'
+"Bundle 'atweiden/vim-betterdigraphs'
+Bundle 'chrisbra/unicode.vim'
+
+Bundle 'suy/vim-ctrlp-commandline'
+
+Bundle 'ervandew/eclim'
 "Bundle 'tpope/vim-fugitive'
 "Bundle 'Lokaltog/vim-easymotion'
 
 filetype plugin indent on
 syntax on
+
 
 
 " Session: Mappings {{{1
@@ -56,12 +71,60 @@ nn <leader>s :so $MYVIMRC<cr>
 "vm <C-c> "+y
 "map <C-v> "+p
 
+
+" IPA
+           "i 
+dig ii 618 "ɪ  - small cap I
+dig uu 650 "ʊ  - upside down upsilon
+           "u:
+"---------------------------------------------------
+           "e
+dig sw 601 "ə  - Latin Small Letter Schwa
+dig ro 604 "ɜ: - Latin Small Letter Reversed Open E
+dig oc 596 "ɔ: - open-mid back rounded vowel
+"---------------------------------------------------
+dig ae 230 "æ  - small ae
+dig lv 652 "ʌ  - small cap lambda
+dig ta 593 "ɑ: - Latin Small Letter Alpha
+dig tu 594 "ɒ  - Latin Small Letter Turned Alpha
+"---------------------------------------------------
+           "p
+           "b
+           "t
+           "d
+"---------------------------------------------------
+           "f
+           "v
+dig te 952 "θ - theta
+           "
+"---------------------------------------------------
+
+
+
+
+dig ez 658 "ʒ - ezh
+dig ez 676 "ʤ - Latin Small Letter Dezh Digraph
+
+
 " switching vim window buffer
 "map <c-j> <c-w>j<c-w>_
 "map <c-k> <c-w>k<c-w>_
 "map <c-h> <c-w>h<c-w>_
 "map <c-l> <c-w>l<c-w>_
 
+" this good but i familiar with shift ;
+nn ; :
+nn : ;
+
+nn v <C-V>
+nn <C-V> v
+
+vn v <C-V>
+vn <C-V> v
+
+" resize vim
+nn <silent> <F11> :exe "vert res -2" <cr>
+nn <silent> <F12> :exe "vert res +2" <cr>
 
 " Toggle line numbers
 nn <leader>N :setl number!<cr>
@@ -69,17 +132,15 @@ nn <leader>N :setl number!<cr>
 nn <Leader>W :setl nowrap! <CR>
 
 " Quick save
-"nn <Leader>w :update<CR>
+nn <silent> <C-c> :update<CR>
 "nn <c-s> :update<CR>
 "ino <c-s> <esc>:update<CR>
 "vn <c-s> <esc>:update<CR>
 
-" Quick quit
-"nn <Leader>q :quit<CR>
-
 " Case insensitive search
-nn / /\v
-vn / /\v
+" use easy motion instead
+"nn / /\v
+"vn / /\v
 
 " Yank/paste to the OS clipboard with ,y and ,p
 vm <leader>y "+y
@@ -90,8 +151,11 @@ nn <leader>p "+p
 "vn <tab> %
 
 " clear search match
-nn <leader><space> :nohl<cr>
-nn q :q<cr>
+nn <silent> <leader><space> :nohl<cr>
+
+" Quick quit
+nn <silent> q :q<cr>
+nn <silent> - :bd<cr>
 
 " copy full directory path of opened file to clipboard
 nmap cpd :let @+ = expand("%:p:h")<CR>
@@ -106,7 +170,7 @@ vm Q gq
 nma Q gqap
 
 " clear trailing space
-nn <leader>f :%s/\s\+$//<cr>
+nn <leader>y :%s/\s\+$//<cr>
 
 nn <leader>0 :GenerateTagsJ "%:p:h"<cr>
 
@@ -141,7 +205,8 @@ se sw=4
 se autowrite
 se title
 se list
-se listchars=tab:»·,trail:·,extends:>,precedes:<,nbsp:.
+"se listchars=tab:»·,trail:·,extends:>,precedes:<,nbsp:.
+exec "set listchars=tab:\uBB\uBB,trail:\uB7,nbsp:~"
 
 se ttyfast
 se ttyscroll=3
@@ -200,7 +265,9 @@ se cursorline " highlight current light
 se nowrap
 se textwidth=79
 se formatoptions=qrn1
-"se colorcolumn=140
+
+highlight ColorColumn ctermbg=magenta
+call matchadd('ColorColumn', '\%141v', 100)
 
 se makeprg=make
 
@@ -234,9 +301,9 @@ se stl+=\|\ %<%P
 "se stl=\ %F%m%r%h\ %w\ \ \ %r%{getcwd()}%h\ \ \ %=%-33.(Line\ %l\ of\ %L\ \|\ Column\ %c%V\ \|\ (%P)%)
 
 " completeopt
-"se cot=longest,menuone
-"set completeopt=menuone,menu,longest,preview
-se dict=/usr/share/dict/cracklib-small,$HOME/.commands_tags
+set cot=menuone,menu,longest
+se dict=/usr/share/dict/words
+hi Pmenu ctermbg=238 gui=bold
 
 "colo default
 
@@ -289,6 +356,21 @@ fu! GenerateTagsForCLibs()
     exe "se tags+=" . l:ctags_files
 endf
 
+"just highlight the match in red...
+"nnoremap <silent> n   n:call HLNext(0.4)<cr>
+"nnoremap <silent> N   N:call HLNext(0.4)<cr>
+"highlight WhiteOnRed ctermbg=Red ctermfg=white
+"function! HLNext (blinktime)
+    "let [bufnum, lnum, col, off] = getpos('.')
+    "let matchlen = strlen(matchstr(strpart(getline('.'),col-1),@/))
+    "let target_pat = '\c\%#'.@/
+    "let ring = matchadd('WhiteOnRed', target_pat, 101)
+    "redraw
+    "exec 'sleep ' . float2nr(a:blinktime * 1000) . 'm'
+    "call matchdelete(ring)
+    "redraw
+"endfunction
+
 "1}}}---------------------------------------------------------------------------
 
 
@@ -335,7 +417,7 @@ map <Leader>to :TagbarToggle<cr>
 
 " Bundle: VCSCommand {{{2
 " ------------------------------------------------------------------------------
-nn <leader>vd :VCSDiff<CR>
+nn <leader>vd :VCSVimDiff<CR>
 "2}}}---------------------------------------------------------------------------
 
 
@@ -374,7 +456,7 @@ let NERDTreeIgnore=[ '\.pyc$', '\.pyo$', '\.py\$class$', '\.obj$',
 
 " Bundle: CtrlP {{{2
 " ------------------------------------------------------------------------------
-let g:ctrlp_max_height = 30
+let g:ctrlp_max_height = 10
 let g:ctrlp_clear_cache_on_exit=0
 let g:ctrlp_use_caching = 0
 
@@ -398,9 +480,15 @@ let expr = substitute(expr, '$', '.*', '')
 let g:ctrlp_user_command='find %s -type f -regextype posix-extended -not -regex "'.expr .'"'
 
 "CtrlP Command line history
+let g:ctrlp_extensions = ['commandline']
 com! CtrlPCommandline cal ctrlp#init(ctrlp#commandline#id())
 nn <silent> <Leader>q :CtrlPCommandline<CR>
 com! CtrlPUnicode call ctrlp#init(ctrlp#unicode#id())
+"2}}}---------------------------------------------------------------------------
+
+
+" Bundle: CtrlP {{{2
+" ------------------------------------------------------------------------------
 "2}}}---------------------------------------------------------------------------
 
 
@@ -415,6 +503,14 @@ com! CtrlPUnicode call ctrlp#init(ctrlp#unicode#id())
 "2}}}---------------------------------------------------------------------------
 
 
+" Bundle: EasyMotion {{{2
+map  / <Plug>(easymotion-sn)
+omap / <Plug>(easymotion-tn)
+"map  n <Plug>(easymotion-next)
+"map  N <Plug>(easymotion-prev)
+"2}}}
+
+
 " Bundle: dbext {{{2
 let g:dbext_default_profile_192_168_95_227_replaceme='type=MYSQL:user=root:passwd=mysql:dbname=replaceme:host=192.168.95.227'
 let g:dbext_default_profile_192_168_95_228_replaceme='type=MYSQL:user=root:passwd=mysql:dbname=replaceme:host=192.168.95.228'
@@ -422,11 +518,19 @@ let g:dbext_default_profile_192_168_95_111_NI='type=MYSQL:user=root:passwd=mysql
 let g:dbext_default_profile_192_168_99_246_NI='type=MYSQL:user=root:passwd=mysql:dbname=NI:host=192.168.99.246'
 "2}}}---------------------------------------------------------------------------
 
+
 " Bundle: Eclim {{{2
 nn <silent> <Leader>l :LocateFile<CR>
 nn <silent> <Leader>s :JavaSearchContext<CR>
 nn <silent> <Leader>t :ProjectsTree<CR>
+nn <silent> <Leader>h :JavaHierarchy<cr>
+xn <silent> <Leader>f :JavaFormat<cr>
+
+nn <silent> <Leader>j :JavaDocComment<cr>
+
 let g:EclimJavaSearchSingleResult='edit'
+let g:EclimLocateFileDefaultAction='edit'
+let g:EclimLocateFileScope = 'workspace'
 
 com! DoSetBreakPoint cal SetBreakPoint()
 nn <silent> sbp :DoSetBreakPoint<CR>
@@ -456,5 +560,23 @@ endf
 
 " 2}}}
 
+" Bundle: dragvisuals {{{2
+vm <expr> H DVB_Drag('left')
+vm <expr> L DVB_Drag('right')
+vm <expr> J DVB_Drag('down')
+vm <expr> K DVB_Drag('up')
+vm <expr> D DVB_Duplicate()
+
+" 2}}}
+
+" Bundle: betterdigraphs{{{2
+"inoremap <expr>  <C-K>  BDG_GetDigraph()
+" 2}}}
 "1}}}---------------------------------------------------------------------------
 
+if has('gui_running')
+    set guioptions-=m  "remove menu bar
+    set guioptions-=T  "remove toolbar
+    set guioptions-=r  "remove right-hand scroll bar
+    set guioptions-=L  "remove left-hand scroll bar
+endif

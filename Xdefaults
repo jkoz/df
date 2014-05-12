@@ -24,26 +24,113 @@ Xcursor.theme: DMZ-White
 ldoce5-bin.iconFile: /opt/ldoce5/splash.xpm
 
 URxvt*tintColor: Blue
+
 !URxvt*transparent: true
 !URxvt*shading: 50
 !URxvt.depth: 32
 !URxvt.background: rgba:1111/1111/1111/dddd
 !URxvt.background: [95]#000000
-URxvt*geometry: 159x57
-URxvt*background: Grey11
-URxvt*foreground: Grey90
-URxvt*font: -Misc-Fixed-Medium-R-Normal--13-120-75-75-C-80-ISO10646-1
-URxvt*color4: RoyalBlue
-URxvt*color12: RoyalBlue
-URxvt*scrollBar: false
-URxvt*scrollBar_right: true
-URxvt*scrollstyle: rxvt
+
+! Specifies the terminal type name to be set in the TERM environment variable
 URxvt*termName: xterm-256color
+
+! Create the window with the specified X window geometry [default 80x24]
+URxvt*geometry: 130x40
+
+! enable clickable links
+URxvt.urlLauncher: /usr/bin/chromium-browser
+URxvt.matcher.button: 1
+
+!urxvt scrolling options and cursor style:
+URxvt*scrollBar: false
+URxvt*saveLines: 10000
+URxvt*scrollstyle:plain
+URxvt*cursorBlink: true
+URxvt*cursorUnderline: true
+URxvt*scrollBar_right: true
+
+! border
+!URxvt.borderColor: #000030
+!URxvt.internalBorder:   1
+
+
+!URxvt.letterSpace: -1
+
+! colors
+URxvt*font: xft:Inconsolata:pixelsize=15
+URxvt*boldFont: xft:Inconsolata:bold:pixelsize=15
+
+!urxvt color scheme:
+URxvt*colorUL: #86a2b0
+
+
+!URxvt*background: #2B2B2B
+!URxvt*foreground: #DEDEDE
+!URxvt*color0  : #2E3436
+!URxvt*color1  : #CC0000
+!URxvt*color10 : #8AE234
+!URxvt*color11 : #FCE94F
+!URxvt*color12 : #729FCF
+!URxvt*color13 : #AD7FA8
+!URxvt*color14 : #34E2E2
+!URxvt*color15 : #EEEEEC
+!URxvt*color2  : #4E9A06
+!URxvt*color3  : #C4A000
+!URxvt*color4  : #3465A4
+!URxvt*color5  : #75507B
+!URxvt*color6  : #06989A
+!URxvt*color7  : #D3D7CF
+!URxvt*color8  : #555753
+!URxvt*color9  : #EF2929
+
+URxvt*background: #2B2B2B
+URxvt*foreground: #DEDEDE
+URxvt.color0:           #3f3f3f
+URxvt.color1:           #705050
+URxvt.color2:           #00b45a
+URxvt.color3:           #dfcf8f
+URxvt.color4:           #506070
+URxvt.color5:           #dc8cc3
+URxvt.color6:           #8cd0d3
+URxvt.color7:           #dcdccc
+URxvt.color8:           #709080
+URxvt.color9:           #cc5454
+URxvt.color10:          #4d9f4d
+URxvt.color11:          #f0dfaf
+URxvt.color12:          #4186be
+URxvt.color13:          #ec93d3
+URxvt.color14:          #93e0e3
+URxvt.color15:          #ffffff
+
+! icons
 URxvt.iconFile: /usr/share/icons/Humanity/apps/16/terminal.svg
+
+
+! perl extension
+URxvt.perl-ext-common: default,matcher,tabbed,clipboard
+
+
+! Keycode fixes for Ctrl+direction in Vim
+URxvt.keysym.C-Up:     \033[1;5A
+URxvt.keysym.C-Down:   \033[1;5B
+URxvt.keysym.C-Right:  \033[1;5C
+URxvt.keysym.C-Left:   \033[1;5D
+URxvt.keysym.C-Prior:  \033[5;5~
+URxvt.keysym.C-Next:   \033[6;5~
+URxvt.keysym.C-Home:   \033[7;5~
+URxvt.keysym.C-End:    \033[8;5~
 URxvt.keysym.Shift-Control-V: perl:clipboard:paste
-URxvt.iso14755: false
-URxvt.perl-ext-common: default,tabbed,clipboard
-URxvt.tabbed.tabbar-fg: 3
+
+! urxvt tabs settings:
+URxvt.tabbed.tabbar-fg: 2
 URxvt.tabbed.tabbar-bg: 0
-URxvt.tabbed.tab-fg:    7
-URxvt.tabbed.tab-bg:    8
+URxvt.tabbed.tab-fg: 2
+URxvt.tabbed.tab-bg: 8
+URxvt.tabbed.autohide:  yes
+URxvt.tabbed.new-button:  no
+URxvt.tabbed.title: no
+
+!URxvt.tabbed.tabbar-fg: 3
+!URxvt.tabbed.tabbar-bg: 0
+!URxvt.tabbed.tab-fg:    7
+!URxvt.tabbed.tab-bg:    8

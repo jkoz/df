@@ -55,6 +55,11 @@ tcpdump -nnvvXSs
 
 # 1}}}
 
+#-ripping-video-audito-cdrdao
+sudo cdrdao copy
+k3b
+
+
 #-curl {{{1
 #-curl-post-soap
 sed  '/<!--/d; /^$/d' ~/soap.xml | \
@@ -102,6 +107,8 @@ done \
 
 #-find-file-current-dir
 find /usr/include/ -maxdepth 1 -type f
+
+find /usr/include/ -type f -size +1048576 -printf "%s:%h%f\n"
 #1}}}---------------------------------------------------------------------------
 
 #-awk {{{1
@@ -314,6 +321,10 @@ printf "%d\n" 4095
 
 #-pdf-text-convert-poppler {{{1
 pdftotext
+# rotate 270 left
+pdftk _stdin_.pdf cat 1-endW output out.pdf
+# resive pdf 
+pdf2ps _stdin_.pdf large.pdf && ps2pdf large.pdf smal.pdf && rm large.pdf
 #1}}}---------------------------------------------------------------------------
 
 # check terminal color 256, 88, 32.. {{{1
@@ -325,6 +336,8 @@ tput colors
 sed -r "s/([^\t]+)       /:\1:/" <output_tab.txt >output.txt
 dictzip output.zip output.txt
 dictfmt --utf8 -s "My dictionary data" -j my_data  < output.txt
+
+/usr/share/stardict/dic
 
 # gentoo
 DICT=longman
@@ -468,6 +481,17 @@ pacman -S lib32-gtk # for install olad8
 
 pacman -S xorg-fonts-100dpi
 
+# install new consolas
+set -e
+set -x
+mkdir temp
+cd temp
+axel http://download.microsoft.com/download/E/6/7/E675FFFC-2A6D-4AB0-B3EB-27C9F8C8F696/PowerPointViewer.exe
+cabextract -L -F ppviewer.cab PowerPointViewer.exe
+cabextract ppviewer.cab
+
+cd /usr/local/share/fonts
+sudo mkdir microsoftfonts
 
 # for install olad8
 pacman -S lib32-gtk
@@ -510,7 +534,12 @@ timedatectl list-timezones
 ntpd -q
 
 #-ubuntu-package
+#-ubuntu-nosound
 apt-cache search pkg_name
+apt-get install ubuntu-restricted-extras
+
+# list all install package
+dpkg --get-selections | grep -v deinstall
 # 1}}}
 
 #-systemd-systemctl {{{1
