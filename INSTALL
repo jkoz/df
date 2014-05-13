@@ -1,6 +1,6 @@
 #!/bin/bash
 echo "INSTALL linux environment"
-install -d ~/bin ~/.bashrc.d ~/.muttrc.d ~/.irssi ~/.irssi/scripts ~/.config/openbox ~/.config/ranger
+install -d ~/.i3 ~/bin ~/.bashrc.d ~/.muttrc.d ~/.irssi ~/.irssi/scripts ~/.config/openbox ~/.config/ranger
 
 # editor
 install -Dm644 vimrc ~/.vimrc
@@ -37,6 +37,7 @@ install -Dm644 irssi/* ~/.irssi
 install -Dm644 config/openbox/* ~/.config/openbox
 install -Dm644 config/tint2/* ~/.config/tint2
 install -Dm644 config/ranger/* ~/.config/ranger
+install -Dm644 i3/config ~/.i3/config
 
 # scripts
 install -Dm755 scripts/* ~/bin
