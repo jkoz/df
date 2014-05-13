@@ -22,7 +22,7 @@ XTerm*pointerColorBackground: black
 Xcursor.theme: DMZ-White
 !Xcursor.size: 20
 
-URxvt*borderLess:true
+!URxvt*borderLess:true
 !URxvt*tintColor: Blue
 
 URxvt*transparent: true
@@ -35,7 +35,7 @@ URxvt.depth: 32
 URxvt*termName: xterm-256color
 
 ! Create the window with the specified X window geometry [default 80x24]
-URxvt*geometry: 130x40
+!URxvt*geometry: 130x40
 
 ! enable clickable links
 URxvt.urlLauncher: /usr/bin/chromium-browser
@@ -43,15 +43,15 @@ URxvt.matcher.button: 1
 
 !urxvt scrolling options and cursor style:
 URxvt*scrollBar: false
-URxvt*saveLines: 10000
-URxvt*scrollstyle:plain
-URxvt*cursorBlink: true
-URxvt*cursorUnderline: true
-URxvt*scrollBar_right: true
+!URxvt*saveLines: 10000
+!URxvt*scrollstyle:plain
+!URxvt*cursorBlink: true
+!URxvt*cursorUnderline: true
+!URxvt*scrollBar_right: true
 
 ! border
-URxvt.borderColor: #000030
-URxvt.internalBorder:   0
+!URxvt.borderColor: #000030
+!URxvt.internalBorder:   0
 
 
 !URxvt.letterSpace: -1
