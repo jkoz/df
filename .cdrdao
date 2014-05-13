@@ -1,0 +1,7 @@
+write_buffers: 128
+write_device: "/dev/sr0"
+write_driver: "generic-mmc"
+read_device: "/dev/sr0"
+read_driver: "generic-mmc"
+read_paranoia_mode: 3
+write_speed: 8

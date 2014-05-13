@@ -21,13 +21,13 @@ XTerm*pointerColorBackground: black
 
 Xcursor.theme: DMZ-White
 !Xcursor.size: 20
-ldoce5-bin.iconFile: /opt/ldoce5/splash.xpm
 
-URxvt*tintColor: Blue
+URxvt*borderLess:true
+!URxvt*tintColor: Blue
 
-!URxvt*transparent: true
-!URxvt*shading: 50
-!URxvt.depth: 32
+URxvt*transparent: true
+URxvt*shading: 100
+URxvt.depth: 32
 !URxvt.background: rgba:1111/1111/1111/dddd
 !URxvt.background: [95]#000000
 
@@ -50,11 +50,14 @@ URxvt*cursorUnderline: true
 URxvt*scrollBar_right: true
 
 ! border
-!URxvt.borderColor: #000030
-!URxvt.internalBorder:   1
+URxvt.borderColor: #000030
+URxvt.internalBorder:   0
 
 
 !URxvt.letterSpace: -1
+
+!Disables the insanely annoying Ctrl+Shift shortcut that enters ISO14755 mode
+URxvt.iso14755:         False
 
 
 ! fonts
@@ -89,7 +92,8 @@ URxvt.iconFile: /usr/share/icons/Humanity/apps/16/terminal.svg
 
 
 ! perl extension
-URxvt.perl-ext-common: default,matcher,tabbed,clipboard
+!URxvt.perl-ext-common: default,matcher,tabbed,clipboard
+URxvt.perl-ext-common: default,matcher,clipboard
 
 
 ! Keycode fixes for Ctrl+direction in Vim
@@ -105,10 +109,16 @@ URxvt.keysym.Shift-Control-V: perl:clipboard:paste
 
 
 ! urxvt tabs settings:
-URxvt.tabbed.tabbar-fg: 3
-URxvt.tabbed.tabbar-bg: 0
-URxvt.tabbed.tab-fg: 7
-URxvt.tabbed.tab-bg: 8
-URxvt.tabbed.autohide:  yes
-URxvt.tabbed.new-button:  no
-URxvt.tabbed.title: no
+!URxvt.tabbed.tabbar-fg: 3
+!URxvt.tabbed.tabbar-bg: 0
+!URxvt.tabbed.tab-fg: 7
+!URxvt.tabbed.tab-bg: 8
+!URxvt.tabbed.autohide: yes
+!URxvt.tabbed.new-button: no
+!URxvt.tabbed.title: no
+!URXvt.tabbed.reopen-on-close: yes
+
+!tabbedex
+!URxvt.keysym.Control-t: perl:tabbedex:new_tab
+!URxvt.keysym.Control-Tab: perl:tabbedex:next_tab
+!URxvt.keysym.Control-Shift-Tab: perl:tabbedex:prev_tab

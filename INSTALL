@@ -25,8 +25,8 @@ install -Dm644 muttrc ~/.muttrc
 install -Dm644 procmailrc ~/.procmailrc
 
 # x session
-install -Dm644 xinitrc ~/.xinitrc
-install -Dm644 Xdefaults ~/.Xdefaults
+install -Dm644 .xinitrc ~/.xinitrc
+install -Dm644 .Xresources ~/.Xresources
 #install -Dm644 Xmodmap ~/.Xmodmap
 
 # irc, im

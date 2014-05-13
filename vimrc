@@ -43,14 +43,14 @@ Bundle 'tpope/vim-fugitive'
 
 Bundle 'klen/python-mode'
 Bundle 'naquad/ctrlp-digraphs.vim'
-"Bundle 'atweiden/vim-betterdigraphs'
+Bundle 'atweiden/vim-betterdigraphs'
 Bundle 'chrisbra/unicode.vim'
 
 Bundle 'suy/vim-ctrlp-commandline'
+Bundle 'vim-scripts/vim-auto-save'
 
 Bundle 'ervandew/eclim'
 "Bundle 'tpope/vim-fugitive'
-"Bundle 'Lokaltog/vim-easymotion'
 
 filetype plugin indent on
 syntax on
@@ -67,9 +67,6 @@ let mapleader = ","
 nn <leader>s :so $MYVIMRC<cr>
 "se verbose=0
 
-" map copy/paste
-"vm <C-c> "+y
-"map <C-v> "+p
 
 
 " IPA
@@ -122,6 +119,10 @@ nn <C-V> v
 vn v <C-V>
 vn <C-V> v
 
+" map copy/paste
+vm <C-c> "+y
+nn <C-v> "+p
+
 " resize vim
 nn <silent> <F11> :exe "vert res -2" <cr>
 nn <silent> <F12> :exe "vert res +2" <cr>
@@ -132,7 +133,7 @@ nn <leader>N :setl number!<cr>
 nn <Leader>W :setl nowrap! <CR>
 
 " Quick save
-nn <silent> <C-c> :update<CR>
+nn <silent> <C-s> :update<CR>
 "nn <c-s> :update<CR>
 "ino <c-s> <esc>:update<CR>
 "vn <c-s> <esc>:update<CR>
@@ -143,8 +144,8 @@ nn <silent> <C-c> :update<CR>
 "vn / /\v
 
 " Yank/paste to the OS clipboard with ,y and ,p
-vm <leader>y "+y
-nn <leader>p "+p
+"vm <leader>y "+y
+"nn <leader>p "+p
 
 " match bracket pairs with tab is a hell of a lot easier than %
 "nn <tab> %
@@ -311,10 +312,20 @@ hi Pmenu ctermbg=238 gui=bold
 "colo wombat256mod
 se background=dark
 colo peaksea
-hi CursorLine cterm=NONE ctermbg=237  guibg=#404040 gui=NONE
-"hi CursorColumn cterm=NONE ctermbg=237  guibg=#404040 gui=NONE
-hi StatusLine cterm=NONE ctermbg=237 ctermfg=226  guibg=#404040 guifg=#ffff00
-"hi SignColumn cterm=NONE ctermbg=237  guibg=#404040 gui=NONE
+
+" cursorline, cursorcolumn
+hi CursorLine cterm=underline ctermbg=NONE guibg=#404040 gui=NONE
+
+set cursorcolumn
+hi CursorColumn cterm=NONE ctermbg=237  guibg=#404040 gui=NONE
+
+hi StatusLine cterm=NONE ctermbg=NONE ctermfg=226  guibg=#404040 guifg=#ffff00
+
+hi SignColumn cterm=NONE ctermbg=237  guibg=#404040 gui=NONE
+"
+" enable transparent
+hi Normal	ctermbg=NONE	cterm=NONE
+hi NonText	ctermbg=NONE	cterm=NONE
 "1}}}---------------------------------------------------------------------------
 
 

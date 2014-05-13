@@ -713,7 +713,7 @@
                     <!--<x>10</x>-->
                     <!--<y>10</y>-->
                     <!--</position>-->
-                <!--<maximized>true</maximized>-->
+                <maximized>true</maximized>
             </application>
             <application name="mupdf">
                 <decor>no</decor>
