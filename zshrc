@@ -31,6 +31,64 @@ zstyle ':completion:*' select-prompt %SScrolling active: current selection at %p
 zstyle ':completion:*' use-compctl false
 zstyle ':completion:*' verbose true
 
+# Default Programs
+#export NMON=cmknt
+export EDITOR="vim"
+export PAGER="less"
+export BROWSER="dwb"
+export MOVPLAY="mplayer"
+export PICVIEW="feh"
+export SNDPLAY="mplayer"
+export TERMINAL="urxvt"
+
+# Packages
+alias extract='dtrx'
+alias gz='tar -xzf'
+alias xz='tar -xJf'
+alias bz='tar -xvjf'
+
+# Pacman
+alias UU='packer-color -Syyu'
+alias UUA='yaourt -Syyua --devel'
+alias P='packer-color'
+alias PI='packer-color -S'
+alias Y='yaourt'
+alias pac='sudo pacman -S'
+alias pac-r='sudo pacman -R'
+alias Log='tail -f /var/log/pacman.log'
+
+## System
+alias shutdown='sudo shutdown -P now'
+alias Stat='uname -a;systemd-analyze time;wc -l /lib/modules/$(uname -r)/modules.order;lsinitcpio -a /boot/initramfs-linux.img'
+alias laptop-mode='grep -r '^\(CONTROL\|ENABLE\)_' /etc/laptop-mode/conf.d'
+alias keys='xev'
+alias bub='say en beau is a bunkace'
+alias unblock-wireless='rfkill unblock all && ifconfig set wlp3s0 up'
+
+## Directories
+alias space='ncdu'
+alias space-color='cdu'
+alias ll='ls -l'
+alias la='ls -ltra'
+alias l='ls'
+alias C='clear'
+alias se='sudo vim'
+alias e='vim'
+alias home='cd ~'
+alias ..='cd ..'
+alias ...='cd ...'
+alias ....='cd ....'
+alias .....='cd .....'
+alias k='exit'
+alias te='trash-empty'
+alias tl='trash-list'
+alias del='trash-put'
+alias tr='trash-rm'
+alias lsTrash='ls ~/.local/share/Trash/files/'
+alias cdTrash='cd ~/.local/share/Trash/files/'
+alias lD='ls ~/Downloads'
+alias D='cd ~/Downloads'
+
 zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
 zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
 
@@ -59,13 +117,41 @@ export QT_IM_MODULE="scim"
 # aliases
 alias l='ls --color=auto'
 alias ll='ls -la --color=auto'
-alias ..="cd .."
-alias ...="cd ../.."
-alias ....="cd ../../.."
 alias mutt='TERM=screen-256color mutt'
 alias irssi='TERM=screen-256color irssi'
 alias b='mvn clean install -Dtest'
 alias e='mvn eclipse:clean eclipse:eclipse'
+
+# X Resources Stuff
+alias eX='vim ~/.Xresources'
+alias XTR='xrdb -merge ~/.Xresources'
+
+# Vim Stuff
+alias eV='vim ~/.vimrc'
+alias e='vim'
+
+# Rip CDs
+alias CDinfo='cdparanoia -vsQ'
+alias rip='cdparanoia -B'
+alias mp3='for t in track{01-14}*.wav; do lame -b 320 $t; done'
+
+# News and Music
+alias MP='ncmpcpp'
+alias news='newsbeuter'
+alias nix='cortex linux'
+alias pods='podbeuter'
+alias twit='turses'
+
+# Multimedia
+alias irc='weechat-curses'
+alias M='mplayer -vo x11 -fs -zoom'
+alias Vids='cd ~/Downloads/.blackbox && ranger'
+
+# Google Calenar
+alias gcal-week='gcalcli --width 12 calw'
+alias gcal='gcalcli --width 12 calm'
+alias gcal-add='gcalcli quick'
+alias gcal-agenda='gcalcli agenda'
 
 # man pages colors
 export LESS_TERMCAP_mb=$'\E[01;31m'       # begin blinking
@@ -84,7 +170,7 @@ then
     plugins=(git jira vi-mode svn safe-paste)
     ZSH_THEME="imajes"
 else
-    plugins=(ams autoenv git jira vi-mode svn safe-paste)
-    ZSH_THEME="ams"
+    plugins=(autoenv git jira vi-mode svn safe-paste)
+    ZSH_THEME="gallois"
 fi
 source $ZSH/oh-my-zsh.sh
