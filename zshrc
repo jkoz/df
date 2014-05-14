@@ -4,7 +4,23 @@ setopt histignorealldups sharehistory
 setopt NO_HUP
 unsetopt HUP
 
-export  CATALINA_HOME="/home/tait/data/projects/apache-tomcat-8.0.5/"
+# projects
+export PROJECT="/home/tait/data/projects"
+export CATALINA_HOME="${PROJECT}/apache-tomcat-8.0.5/"
+export DOTFILE_HOME="${PROJECT}/dotfiles"
+export AXS_HOME="${PROJECT}/axs"
+export MEDIA_HOME="$HOME/media"
+export VIDEO_HOME="$MEDIA_HOME/video"
+
+# Default Programs
+#export NMON=cmknt
+export EDITOR="vim"
+export PAGER="less"
+export BROWSER="firefox"
+export MOVPLAY="mplayer"
+export PICVIEW="feh"
+export SNDPLAY="mplayer"
+export TERMINAL="urxvt"
 
 bindkey -v
 bindkey ^R history-incremental-pattern-search-backward
@@ -16,6 +32,7 @@ bindkey '^n'    down-line-or-history
 # Use modern completion system
 autoload -Uz compinit
 compinit
+
 zstyle ':completion:*' auto-description 'specify: %d'
 zstyle ':completion:*' completer _expand _complete _correct _approximate
 zstyle ':completion:*' format 'Completing %d'
@@ -30,16 +47,79 @@ zstyle ':completion:*' menu select=long
 zstyle ':completion:*' select-prompt %SScrolling active: current selection at %p%s
 zstyle ':completion:*' use-compctl false
 zstyle ':completion:*' verbose true
+zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
+zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
 
-# Default Programs
-#export NMON=cmknt
-export EDITOR="vim"
-export PAGER="less"
-export BROWSER="dwb"
-export MOVPLAY="mplayer"
-export PICVIEW="feh"
-export SNDPLAY="mplayer"
-export TERMINAL="urxvt"
+# Map Ctrl-S to sth usefull other than XOFF (interrupt data flow).
+stty -ixon
+
+# Keep 1000 lines of history within the shell and save it to ~/.zsh_history:
+HISTSIZE=10000
+SAVEHIST=10000
+HISTFILE=~/.zsh_history
+
+# x
+[ -n "$DISPLAY" ] && xset r rate 300 50
+
+# auto cd
+autoenv_cd () {
+    builtin cd $@
+
+    if test "`pwd`" = "${AXS_HOME}" -a x"${axs_home_reload}" = x ; then
+        echo "loading env for axs..."
+        # init axs plugins/theme
+        plugins=(ams autoenv git jira vi-mode svn safe-paste)
+        ZSH_THEME="ams"
+
+        # reload it
+        reload_zsh_plugin
+
+        # before reload use in ams plugin
+        before_autoenv_cd
+
+        # mark it, avoid load again
+        axs_home_reload=1
+    fi
+}
+
+# overide in oh-my-zsh plugin
+before_autoenv_cd() {
+}
+
+#scim
+export XMODIFIERS=@im=SCIM
+export GTK_IM_MODULE="scim"
+export QT_IM_MODULE="scim"
+
+
+# man pages colors
+export LESS_TERMCAP_mb=$'\E[01;31m'       # begin blinking
+export LESS_TERMCAP_md=$'\E[01;38;5;74m'  # begin bold
+export LESS_TERMCAP_me=$'\E[0m'           # end mode
+export LESS_TERMCAP_se=$'\E[0m'           # end standout-mode
+export LESS_TERMCAP_so=$'\E[38;5;246m'    # begin standout-mode - info box
+export LESS_TERMCAP_ue=$'\E[0m'           # end underline
+export LESS_TERMCAP_us=$'\E[04;38;5;146m' # begin underline
+
+######################################################################################
+# oh my zsh
+ZSH=$HOME/.oh-my-zsh
+if test "$UID" -eq 0
+then
+    plugins=(git jira vi-mode svn safe-paste)
+    ZSH_THEME="imajes"
+else
+    plugins=(autoenv git jira vi-mode svn safe-paste)
+    ZSH_THEME="gallois"
+fi
+source $ZSH/oh-my-zsh.sh
+
+### alias ####
+# projects
+alias pA='cd $AXS_HOME'
+
+# torrent
+tV() { cd ${VIDEO_HOME}; rtorrent "$@"; }
 
 # Packages
 alias extract='dtrx'
@@ -89,30 +169,8 @@ alias cdTrash='cd ~/.local/share/Trash/files/'
 alias lD='ls ~/Downloads'
 alias D='cd ~/Downloads'
 
-zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
-zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
-
-# Map Ctrl-S to sth usefull other than XOFF (interrupt data flow).
-stty -ixon
-
-# Keep 1000 lines of history within the shell and save it to ~/.zsh_history:
-HISTSIZE=10000
-SAVEHIST=10000
-HISTFILE=~/.zsh_history
-
-export EDITOR="vim"
-
-# x
-[ -n "$DISPLAY" ] && xset r rate 300 50
-
-autoenv_cd () {
-    builtin cd $@
-}
-
-#scim
-export XMODIFIERS=@im=SCIM
-export GTK_IM_MODULE="scim"
-export QT_IM_MODULE="scim"
+# update dotfile
+alias uD="cd ${DOTFILE_HOME} && ./INSTALL"
 
 # aliases
 alias l='ls --color=auto'
@@ -123,11 +181,17 @@ alias b='mvn clean install -Dtest'
 alias e='mvn eclipse:clean eclipse:eclipse'
 
 # X Resources Stuff
-alias eX='vim ~/.Xresources'
+alias eX='vim ${DOTFILE_HOME}/.Xresources; uD'
 alias XTR='xrdb -merge ~/.Xresources'
 
+# Edit zshrc
+alias eZ='vim ${DOTFILE_HOME}/zshrc; uD'
+
+# i3
+alias eI='vim ${DOTFILE_HOME}/i3/config; uD'
+
 # Vim Stuff
-alias eV='vim ~/.vimrc'
+alias eV='vim ${DOTFILE_HOME}/vimrc; uD'
 alias e='vim'
 
 # Rip CDs
@@ -153,24 +217,39 @@ alias gcal='gcalcli --width 12 calm'
 alias gcal-add='gcalcli quick'
 alias gcal-agenda='gcalcli agenda'
 
-# man pages colors
-export LESS_TERMCAP_mb=$'\E[01;31m'       # begin blinking
-export LESS_TERMCAP_md=$'\E[01;38;5;74m'  # begin bold
-export LESS_TERMCAP_me=$'\E[0m'           # end mode
-export LESS_TERMCAP_se=$'\E[0m'           # end standout-mode
-export LESS_TERMCAP_so=$'\E[38;5;246m'    # begin standout-mode - info box
-export LESS_TERMCAP_ue=$'\E[0m'           # end underline
-export LESS_TERMCAP_us=$'\E[04;38;5;146m' # begin underline
+### function ###
+# auto load oh-my-zsh plugin
+is_plugin() {
+    local base_dir=$1
+    local name=$2
+    test -f $base_dir/plugins/$name/$name.plugin.zsh \
+        || test -f $base_dir/plugins/$name/_$name
+}
 
-######################################################################################
-# oh my zsh
-ZSH=$HOME/.oh-my-zsh
-if test "$UID" -eq 0
-then
-    plugins=(git jira vi-mode svn safe-paste)
-    ZSH_THEME="imajes"
-else
-    plugins=(autoenv git jira vi-mode svn safe-paste)
-    ZSH_THEME="gallois"
-fi
-source $ZSH/oh-my-zsh.sh
+reload_zsh_plugin() {
+    #echo "Reload zsh plugin"
+    # Load and run compinit
+    autoload -U compinit
+    compinit -i
+
+    # Add all defined plugins to fpath. This must be done before running compinit.
+    for plugin ($plugins); do
+        if is_plugin $ZSH_CUSTOM $plugin; then
+            fpath=($ZSH_CUSTOM/plugins/$plugin $fpath)
+        elif is_plugin $ZSH $plugin; then
+            fpath=($ZSH/plugins/$plugin $fpath)
+        fi
+    done
+
+    # Two lines here I think we can disregard
+    # Load all of the plugins that were defined in ~/.zshrc
+    for plugin ($plugins); do
+        if [ -f $ZSH_CUSTOM/plugins/$plugin/$plugin.plugin.zsh ]; then
+            source $ZSH_CUSTOM/plugins/$plugin/$plugin.plugin.zsh
+        elif [ -f $ZSH/plugins/$plugin/$plugin.plugin.zsh ]; then
+            source $ZSH/plugins/$plugin/$plugin.plugin.zsh
+        fi
+    done
+
+    source $ZSH/themes/${ZSH_THEME}.zsh-theme
+}

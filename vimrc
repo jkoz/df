@@ -162,6 +162,8 @@ nn <silent> - :bd<cr>
 nmap cpd :let @+ = expand("%:p:h")<CR>
 " copy full file path of opened file to clipboard
 nmap cpf :let @+ = expand("%:p")<CR>
+" dos2unix
+nm d2u :%s/\r//g<CR>
 
 " strip \r (^M)
 nmap stm :%s/\r//g<CR>
@@ -468,6 +470,7 @@ let NERDTreeIgnore=[ '\.pyc$', '\.pyo$', '\.py\$class$', '\.obj$',
 " Bundle: CtrlP {{{2
 " ------------------------------------------------------------------------------
 let g:ctrlp_max_height = 10
+let g:ctrlp_max_files=100000
 let g:ctrlp_clear_cache_on_exit=0
 let g:ctrlp_use_caching = 0
 
@@ -583,6 +586,11 @@ vm <expr> D DVB_Duplicate()
 " Bundle: betterdigraphs{{{2
 "inoremap <expr>  <C-K>  BDG_GetDigraph()
 " 2}}}
+
+" Bundle: betterdigraphs{{{2
+let g:auto_save = 1
+" 2}}}
+
 "1}}}---------------------------------------------------------------------------
 
 if has('gui_running')
