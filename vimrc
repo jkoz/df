@@ -40,6 +40,7 @@ Bundle 'vim-scripts/Colortest'
 Bundle 'majutsushi/tagbar'
 Bundle 'gavinbeatty/dragvisuals.vim'
 Bundle 'tpope/vim-fugitive'
+Bundle 'mileszs/ack.vim'
 
 Bundle 'klen/python-mode'
 Bundle 'naquad/ctrlp-digraphs.vim'
@@ -590,6 +591,10 @@ vm <expr> D DVB_Duplicate()
 " Bundle: betterdigraphs{{{2
 let g:auto_save = 1
 " 2}}}
+
+" ack.vim
+"g:ackprg = 'ag --nogroup --nocolor --column
+let g:ack_default_options = " -H --nocolor --nogroup --column"
 
 "1}}}---------------------------------------------------------------------------
 
