@@ -3,13 +3,16 @@
 #
 # Should you change your keyboard layout somewhen, delete
 # this file and re-run i3-config-wizard(1).
-#
+#                           Anki
 
 # i3 config file (v4)
 #
 # Please see http://i3wm.org/docs/userguide.html for a complete reference!
 
 set $mod Mod1
+set $win Mod4
+
+set layout tabbed
 
 #font
 font pango:Inconsolata, Inconsolata Bold Condensed 11
@@ -18,10 +21,13 @@ font pango:Inconsolata, Inconsolata Bold Condensed 11
 exec "x11vnc -shared -rfbport 5900 -forever -usepw -display :0.0 -bg"
 exec "feh --bg-scale ~/Downloads/media/wallpapers/wall.jpg &"
 exec "urxvtd -q -f -o"
+exec i3-sensible-terminal
+#exect scim -d
+
 #exec "xlock -mode black"
 #xautolock -locker  "xlock -mode blank" -corners 0+00  -cornerdelay 1 &
+
 #tint2 -c ~/.config/tint2 &
-#scim -d
 #~/.conky/conkys
 #fetchmail -vk
 
@@ -35,7 +41,7 @@ bindsym $mod+Return exec i3-sensible-terminal
 bindsym $mod+Shift+q kill
 
 # fuzzy search list of windows
-bindsym $mod+d exec /home/tait/.i3/winmenu.py
+bindsym $mod+d exec urxvt -e zsh -c "$HOME/.i3/winmenu.py"
 
 # window
 new_window pixel 2
@@ -52,7 +58,6 @@ bindsym $mod+h focus left
 bindsym $mod+j focus down
 bindsym $mod+k focus up
 bindsym $mod+l focus right
-bindsym $mod+Tab exec /home/tait/.i3/cycle.py
 
 # move focused window
 bindsym $mod+Shift+h move left
@@ -60,11 +65,15 @@ bindsym $mod+Shift+j move down
 bindsym $mod+Shift+k move up
 bindsym $mod+Shift+l move right
 
+# switch to next/prev workspace (alt-tab)
+bindsym $mod+Tab workspace next
+bindsym $mod+Shift+Tab workspace prev
+
 # split in horizontal orientation
-bindsym $mod+t split h
+bindsym $win+h split h
 
 # split in vertical orientation
-bindsym $mod+u split v
+bindsym $win+v split v
 
 # enter fullscreen mode for the focused container
 bindsym $mod+f fullscreen

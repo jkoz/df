@@ -1,26 +1,6 @@
-" ------------------------------------------------------------------------------
-" TODO:
-"   - CtrlP does not accept tab completion, but :e
-"   - history is not updated
-"   - reuse wildignore for nerd tree
-"   - spead up gvim, it is lag
-" ------------------------------------------------------------------------------
+" VIMRC
 
-
-" Section: Abbreviation
-" ------------------------------------------------------------------------------
-" java, c
-ab #j /*----------------------------------------------------------------------------*/
-
-" vim
-ab #v "-------------------------------------------------------------------------------
-ab #c "1}}}---------------------------------------------------------------------------
-
-" bash, python, perl
-ab #b #-------------------------------------------------------------------------------
-ab #e #1}}}---------------------------------------------------------------------------
-
-" init vundle
+" vundle {{{
 se nocompatible
 filetype off
 set rtp+=~/.vim/bundle/vundle/
@@ -31,6 +11,7 @@ Bundle 'kien/ctrlp.vim'
 Bundle 'scrooloose/nerdtree'
 Bundle 'scrooloose/nerdcommenter'
 Bundle 'spf13/vim-colors'
+Bundle 'sjl/badwolf'
 Bundle 'vim-scripts/dbext.vim'
 Bundle 'Lokaltog/vim-easymotion'
 Bundle 'bling/vim-airline'
@@ -41,29 +22,27 @@ Bundle 'majutsushi/tagbar'
 Bundle 'gavinbeatty/dragvisuals.vim'
 Bundle 'tpope/vim-fugitive'
 Bundle 'mileszs/ack.vim'
-
+Bundle 'sjl/gundo.vim'
 Bundle 'klen/python-mode'
 Bundle 'naquad/ctrlp-digraphs.vim'
 Bundle 'atweiden/vim-betterdigraphs'
 Bundle 'chrisbra/unicode.vim'
-
 Bundle 'suy/vim-ctrlp-commandline'
 Bundle 'vim-scripts/vim-auto-save'
-
 Bundle 'ervandew/eclim'
 "Bundle 'tpope/vim-fugitive'
 
 filetype plugin indent on
 syntax on
 
-
-
-" Session: Mappings {{{1
-" ------------------------------------------------------------------------------
+" }}}
+" Mappings {{{
 let mapleader = ","
 
-"ino jk <esc>
-"vn jk <esc>
+" jk as escape
+ino jk <esc>
+vn jk <esc>
+
 "nn ; :
 nn <leader>s :so $MYVIMRC<cr>
 "se verbose=0
@@ -178,10 +157,8 @@ nn <leader>y :%s/\s\+$//<cr>
 
 nn <leader>0 :GenerateTagsJ "%:p:h"<cr>
 
-"1}}}---------------------------------------------------------------------------
-
-
-" Section: Options:{{{1
+" }}}
+" Options {{{
 "-------------------------------------------------------------------------------
 
 if v:version >= 600
@@ -215,7 +192,12 @@ exec "set listchars=tab:\uBB\uBB,trail:\uB7,nbsp:~"
 se ttyfast
 se ttyscroll=3
 se lazyredraw
+se foldlevelstart=10   " open most folds by default
+" space open/closes folds
+nnoremap <space> za
+
 se synmaxcol=174
+
 
 " No swap files
 se nobackup
@@ -276,6 +258,7 @@ call matchadd('ColorColumn', '\%141v', 100)
 se makeprg=make
 
 se foldenable
+se foldmethod=indent
 
 se sidescroll=1
 se sidescrolloff=10
@@ -313,8 +296,9 @@ hi Pmenu ctermbg=238 gui=bold
 
 "colo peaksea
 "colo wombat256mod
-se background=dark
-colo peaksea
+"se background=dark
+
+colo badwolf
 
 " cursorline, cursorcolumn
 hi CursorLine cterm=underline ctermbg=NONE guibg=#404040 gui=NONE
@@ -329,11 +313,30 @@ hi SignColumn cterm=NONE ctermbg=237  guibg=#404040 gui=NONE
 " enable transparent
 hi Normal	ctermbg=NONE	cterm=NONE
 hi NonText	ctermbg=NONE	cterm=NONE
-"1}}}---------------------------------------------------------------------------
+" }}}
+" functions {{{
+" toggle between number and relativenumber
+fu! ToggleNumber()
+    if(&relativenumber == 1)
+        set norelativenumber
+        set number
+    else
+        set relativenumber
+    endif
+endfunc
 
+" strips trailing whitespace at the end of files. this
+" is called on buffer write in the autogroup above.
+function! <SID>StripTrailingWhitespaces()
+    " save last search & cursor position
+    let _s=@/
+    let l = line(".")
+    let c = col(".")
+    %s/\s\+$//e
+    let @/=_s
+    call cursor(l, c)
+endfunction
 
-" Section: Commands {{{1
-" ------------------------------------------------------------------------------
 fu! Format()
     exe "%s/\s\+$//"
     exe "%s/\t/  /"
@@ -384,12 +387,12 @@ endf
     "call matchdelete(ring)
     "redraw
 "endfunction
-
-"1}}}---------------------------------------------------------------------------
-
-
-" Section: Auto commands {{{1
-" ------------------------------------------------------------------------------
+" }}}
+" Auto Groups {{{
+"This is a slew of commands that create language-specific settings for certain
+"filetypes/file extensions. It is important to note they are wrapped in an
+"augroup as this ensures the autocmd's are only applied once. In addition, the
+"autocmd! directive clears all the autocmd's for the current group.
 aug group_sources
     au!
     au BufWritePost .vimrc so $MYVIMRC
@@ -402,6 +405,34 @@ aug group_file
     au BufRead,BufNewFile *.c,*.h,*.cpp for each in split(expand('~/.tags/usr-include*'), "\n") | exe "se tags+=" . each | endfo
 aug END
 
+aug configgroup
+    au!
+    au VimEnter * highlight clear SignColumn
+    "au BufWritePre *.php,*.py,*.js,*.txt,*.hs,*.java,*.md
+                "\:call <SID>StripTrailingWhitespaces()
+    "au FileType java setl noexpandtab
+    "au FileType java setl list
+    "au FileType java setl listchars=tab:+\ ,eol:-
+    "au FileType java setl formatprg=par\ -w80\ -T4
+    "au FileType php setl expandtab
+    "au FileType php setl list
+    "au FileType php setl listchars=tab:+\ ,eol:-
+    "au FileType php setl formatprg=par\ -w80\ -T4
+    "au FileType ruby setl tabstop=2
+    "au FileType ruby setl shiftwidth=2
+    "au FileType ruby setl softtabstop=2
+    "au FileType ruby setl commentstring=#\ %s
+    "au FileType python setl commentstring=#\ %s
+    "au BufEnter *.cls setl filetype=java
+    "au BufEnter *.zsh-theme setl filetype=zsh
+    "au BufEnter Makefile setl noexpandtab
+    "au BufEnter *.sh setl tabstop=2
+    "au BufEnter *.sh setl shiftwidth=2
+    "au BufEnter *.sh setl softtabstop=2
+    au BufEnter vimrc setl foldmethod=marker
+    au BufEnter vimrc setl foldlevel=0
+augroup END
+
 "au FileType css setl omnifunc=csscomplete#CompleteCSS
 "au FileType html,markdown setl omnifunc=htmlcomplete#CompleteTags
 "au FileType javascript setl omnifunc=javascriptcomplete#CompleteJS
@@ -409,81 +440,66 @@ aug END
 "au FileType ruby setl omnifunc=rubycomplete#Complete
 "au FileType java setl omnifunc=javacomplete#Complete
 "au FileType xml setl omnifunc=xmlcomplete#CompleteTags
-
 "let g:xml_syntax_folding=1
 "au FileType xml,xsd setl foldmethod=syntax
-
 " automatically open and close the popup menu / preview window
 au CursorMovedI,InsertLeave * if pumvisible() == 0|silent! pclose|endif
 
-"1}}}---------------------------------------------------------------------------
-
-
-" Section: Plugins {{{1
-" ------------------------------------------------------------------------------
-
-" Bundle: Tag bar {{{2
-" ------------------------------------------------------------------------------
+" allows cursor change in tmux mode
+if exists('$TMUX')
+    let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
+    let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
+else
+    let &t_SI = "\<Esc>]50;CursorShape=1\x7"
+    let &t_EI = "\<Esc>]50;CursorShape=0\x7"
+endif
+" }}}
+" Tag bar {{{
 let g:tagbar_autofocus = 1
 map <Leader>to :TagbarToggle<cr>
-"2}}}---------------------------------------------------------------------------
-
-
-" Bundle: VCSCommand {{{2
-" ------------------------------------------------------------------------------
+" }}}
+" VCSCommand {{{
 nn <leader>vd :VCSVimDiff<CR>
-"2}}}---------------------------------------------------------------------------
-
-
-" Bundle: Nerd tree {{{2
-" ------------------------------------------------------------------------------
+" }}}
+" Nerd tree {{{
 nn <leader>no :NERDTreeToggle<CR>
 nn <leader>nf :NERDTreeFind<CR>
-
 " Store the bookmarks file
 let NERDTreeBookmarksFile=expand("$HOME/.vim/NERDTreeBookmarks")
 let g:NERDTreeDirArrows=0
-
 " Show the bookmarks table on startup
 let NERDTreeShowBookmarks=1
-
 " Show hidden files, too
 let NERDTreeShowFiles=1
 let NERDTreeShowHidden=1
-
 " Quit on opening files from the tree
 " let NERDTreeQuitOnOpen=2
 let NERDTreeWinSize = 40
-
 " Highlight the selected entry in the tree
 let NERDTreeHighlightCursorline=1
-
-
 " Use a single click to fold/unfold directories and a double click to open files
 let NERDTreeMouseMode=2
-
 " Don't display these kinds of files
 let NERDTreeIgnore=[ '\.pyc$', '\.pyo$', '\.py\$class$', '\.obj$',
             \ '\.o$', '\.so$', '\.egg$', '^\.git$', '\.svn$', '^target$', '^\.settings$', '^\.classpath$', '^\.project$', '^\.hg', '.pydevproject'  ]
-"2}}}---------------------------------------------------------------------------
+" }}}
+" CtrlP {{{
+let g:ctrlp_user_command = 'ag %s -l --nocolor --hidden -g ""'
 
-
-" Bundle: CtrlP {{{2
-" ------------------------------------------------------------------------------
 let g:ctrlp_max_height = 10
 let g:ctrlp_max_files=100000
 let g:ctrlp_clear_cache_on_exit=0
 let g:ctrlp_use_caching = 0
-
 nn <silent> <Leader>p :CtrlP .<CR>
 nn <silent> <Leader>o :CtrlPBufTag<CR>
 nn <silent> <Leader>i :CtrlPTag<CR>
-"nn <silent> <Leader>l :CtrlPLine<CR>
+nn <silent> <Leader>b :CtrlPBookmarkDir<CR>
 nn <silent> <Leader>z :CtrlPBuffer<CR>
 nn <silent> <Leader>m :CtrlPMRUFiles<CR>
+" conflict with eclim
 "nn <silent> <Leader>j :CtrlPRTS<CR>
-nn <silent> <Leader>b :CtrlPBookmarkDir<CR>
-
+"nn <silent> <Leader>l :CtrlPLine<CR>
+" filter base on wildignore
 let pats = ['\**\([\/?_.0-9A-Za-z]\+\)\([\/]*\)\**\(\\\@<!,\|$\)', '\.', '\\\@<!,']
 let subs = ['\1\2\3', '\\.', '.*|.*']
 let expr = substitute(&wildignore, pats[0], subs[0], 'g')
@@ -492,22 +508,15 @@ let expr = substitute(expr, pats[2], subs[2], 'g')
 let expr = substitute(expr, '\\,', ',', 'g')
 let expr = substitute(expr, '^', '.*', '')
 let expr = substitute(expr, '$', '.*', '')
-let g:ctrlp_user_command='find %s -type f -regextype posix-extended -not -regex "'.expr .'"'
-
-"CtrlP Command line history
+"let g:ctrlp_user_command='find %s -type f -regextype posix-extended -not -regex "'.expr .'"'
+" }}}
+" CtrlP command line {{{
 let g:ctrlp_extensions = ['commandline']
 com! CtrlPCommandline cal ctrlp#init(ctrlp#commandline#id())
 nn <silent> <Leader>q :CtrlPCommandline<CR>
 com! CtrlPUnicode call ctrlp#init(ctrlp#unicode#id())
-"2}}}---------------------------------------------------------------------------
-
-
-" Bundle: CtrlP {{{2
-" ------------------------------------------------------------------------------
-"2}}}---------------------------------------------------------------------------
-
-
-" Bundle: CppOmniComplete {{{2
+" }}}
+" CppOmniComplete {{{
 "let OmniCpp_NamespaceSearch = 1
 "let OmniCpp_GlobalScopeSearch = 1
 "let OmniCpp_ShowAccess = 1
@@ -515,32 +524,25 @@ com! CtrlPUnicode call ctrlp#init(ctrlp#unicode#id())
 "let OmniCpp_MayCompleteArrow = 1
 "let OmniCpp_MayCompleteScope = 1
 "let OmniCpp_DefaultNamespaces = ["std", "_GLIBCXX_STD"]
-"2}}}---------------------------------------------------------------------------
-
-
-" Bundle: EasyMotion {{{2
+" }}}
+" EasyMotion {{{
 map  / <Plug>(easymotion-sn)
 omap / <Plug>(easymotion-tn)
 "map  n <Plug>(easymotion-next)
 "map  N <Plug>(easymotion-prev)
-"2}}}
-
-
-" Bundle: dbext {{{2
+" }}}
+" dbext {{{
 let g:dbext_default_profile_192_168_95_227_replaceme='type=MYSQL:user=root:passwd=mysql:dbname=replaceme:host=192.168.95.227'
 let g:dbext_default_profile_192_168_95_228_replaceme='type=MYSQL:user=root:passwd=mysql:dbname=replaceme:host=192.168.95.228'
 let g:dbext_default_profile_192_168_95_111_NI='type=MYSQL:user=root:passwd=mysql:dbname=NI:host=192.168.95.111:port=3307'
 let g:dbext_default_profile_192_168_99_246_NI='type=MYSQL:user=root:passwd=mysql:dbname=NI:host=192.168.99.246'
-"2}}}---------------------------------------------------------------------------
-
-
-" Bundle: Eclim {{{2
+" }}}
+" Eclim {{{
 nn <silent> <Leader>l :LocateFile<CR>
 nn <silent> <Leader>s :JavaSearchContext<CR>
 nn <silent> <Leader>t :ProjectsTree<CR>
 nn <silent> <Leader>h :JavaHierarchy<cr>
 xn <silent> <Leader>f :JavaFormat<cr>
-
 nn <silent> <Leader>j :JavaDocComment<cr>
 
 let g:EclimJavaSearchSingleResult='edit'
@@ -572,35 +574,29 @@ fu! GetQualiedName()
     let l:bp = l:bp . substitute(expand('%:t'), '.java', '', '')
     return l:bp
 endf
-
-" 2}}}
-
-" Bundle: dragvisuals {{{2
+" }}}
+" dragvisuals {{{
 vm <expr> H DVB_Drag('left')
 vm <expr> L DVB_Drag('right')
 vm <expr> J DVB_Drag('down')
 vm <expr> K DVB_Drag('up')
 vm <expr> D DVB_Duplicate()
-
-" 2}}}
-
-" Bundle: betterdigraphs{{{2
+" }}}
+" betterdigraphs {{{
 "inoremap <expr>  <C-K>  BDG_GetDigraph()
-" 2}}}
-
-" Bundle: betterdigraphs{{{2
+" }}}
+" autsave {{{
 let g:auto_save = 1
-" 2}}}
-
-" ack.vim
-"g:ackprg = 'ag --nogroup --nocolor --column
+" }}}
+" ack.vim {{{
+let g:ackprg = 'ag'
 let g:ack_default_options = " -H --nocolor --nogroup --column"
-
-"1}}}---------------------------------------------------------------------------
-
+" }}}
+" gui {{{
 if has('gui_running')
     set guioptions-=m  "remove menu bar
     set guioptions-=T  "remove toolbar
     set guioptions-=r  "remove right-hand scroll bar
     set guioptions-=L  "remove left-hand scroll bar
 endif
+" }}}

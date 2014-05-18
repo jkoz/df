@@ -5,7 +5,7 @@ setopt NO_HUP
 unsetopt HUP
 
 # projects
-export PROJECT="/home/tait/data/projects"
+export PROJECT="$HOME/data/projects"
 export CATALINA_HOME="${PROJECT}/apache-tomcat-8.0.5/"
 export DOTFILE_HOME="${PROJECT}/dotfiles"
 export AXS_HOME="${PROJECT}/axs"
@@ -253,3 +253,13 @@ reload_zsh_plugin() {
 
     source $ZSH/themes/${ZSH_THEME}.zsh-theme
 }
+
+# scribd
+scribd () {
+    url=$1
+    ak=`wget -q -O- $url | grep  access_key  | sed -e 's/\(.*\)key-\(.*\)\"/\2/' | cut -d'"' -f1 | \
+    xargs echo "key-" | sed 's/ //g'` && docid=`echo $url | cut -d'/' -f5` && \ 
+    chromium-browser "http://d1.scribdassets.com/ScribdViewer.swf?document_id=${docid}&access_key=${ak}"
+}
+
+source ~/.fzf.zsh

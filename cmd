@@ -325,6 +325,7 @@ pdftotext
 pdftk _stdin_.pdf cat 1-endW output out.pdf
 # resive pdf 
 pdf2ps _stdin_.pdf large.pdf && ps2pdf large.pdf smal.pdf && rm large.pdf
+gs -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dPDFSETTINGS=/screen -sOutputFile=new_file.pdf original_file.pdf
 #1}}}---------------------------------------------------------------------------
 
 # check terminal color 256, 88, 32.. {{{1
