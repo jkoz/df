@@ -1,5 +1,25 @@
 " VIMRC
-
+" READ ME {{{
+" current word - let a=expand('<cword>')
+" count word - vimgrep word %"
+"
+" vim motion
+" c-y - move view point down
+" c-e - move view point up
+"
+" vim diff
+" do - Get changes from other window into the current window.
+" dp - Put the changes from current window into the other window.
+" ]c - Jump to the next change.
+" [c - Jump to the previous change.
+"
+" dump vim setting
+" :mkvimrc /tmp/map
+"
+" 1. remove current file
+" 2. java import have problem
+" 3. choose item in auto complete box
+" }}}
 " vundle {{{
 se nocompatible
 filetype off
@@ -47,8 +67,6 @@ vn jk <esc>
 nn <leader>s :so $MYVIMRC<cr>
 "se verbose=0
 
-
-
 " IPA
            "i 
 dig ii 618 "ɪ  - small cap I
@@ -84,10 +102,10 @@ dig ez 676 "ʤ - Latin Small Letter Dezh Digraph
 
 
 " switching vim window buffer
-"map <c-j> <c-w>j<c-w>_
-"map <c-k> <c-w>k<c-w>_
-"map <c-h> <c-w>h<c-w>_
-"map <c-l> <c-w>l<c-w>_
+map <c-j> <c-w>j<c-w>_
+map <c-k> <c-w>k<c-w>_
+map <c-h> <c-w>h<c-w>_
+map <c-l> <c-w>l<c-w>_
 
 " this good but i familiar with shift ;
 nn ; :
@@ -106,6 +124,8 @@ nn <C-v> "+p
 " resize vim
 nn <silent> <F11> :exe "vert res -2" <cr>
 nn <silent> <F12> :exe "vert res +2" <cr>
+nn <silent> <F9>  :exe "res -2" <cr>
+nn <silent> <F10> :exe "res +2" <cr>
 
 " Toggle line numbers
 nn <leader>N :setl number!<cr>
@@ -393,24 +413,13 @@ endf
 "filetypes/file extensions. It is important to note they are wrapped in an
 "augroup as this ensures the autocmd's are only applied once. In addition, the
 "autocmd! directive clears all the autocmd's for the current group.
-aug group_sources
-    au!
-    au BufWritePost .vimrc so $MYVIMRC
-aug END
-
-aug group_file
-    au!
-    "au BufRead,BufNewFile *.html,*.xhtml,*.xml se softtabstop=2 shiftwidth=2 tabstop=2
-    au BufRead,BufNewFile *.html,*.xhtml,*.xml setl foldmethod=indent
-    au BufRead,BufNewFile *.c,*.h,*.cpp for each in split(expand('~/.tags/usr-include*'), "\n") | exe "se tags+=" . each | endfo
-aug END
-
 aug configgroup
     au!
+    "au BufWritePost .vimrc so $MYVIMRC
     au VimEnter * highlight clear SignColumn
     "au BufWritePre *.php,*.py,*.js,*.txt,*.hs,*.java,*.md
                 "\:call <SID>StripTrailingWhitespaces()
-    "au FileType java setl noexpandtab
+    au FileType java setl foldmethod=indent
     "au FileType java setl list
     "au FileType java setl listchars=tab:+\ ,eol:-
     "au FileType java setl formatprg=par\ -w80\ -T4
@@ -429,8 +438,10 @@ aug configgroup
     "au BufEnter *.sh setl tabstop=2
     "au BufEnter *.sh setl shiftwidth=2
     "au BufEnter *.sh setl softtabstop=2
-    au BufEnter vimrc setl foldmethod=marker
-    au BufEnter vimrc setl foldlevel=0
+    "au BufRead,BufNewFile *.html,*.xhtml,*.xml se softtabstop=2 shiftwidth=2 tabstop=2
+    au BufRead,BufNewFile *.html,*.xhtml,*.xml setl foldmethod=indent|setl foldlevel=0
+    au BufRead,BufNewFile *.c,*.h,*.cpp for each in split(expand('~/.tags/usr-include*'), "\n") | exe "se tags+=" . each | endfo
+    au BufEnter vimrc,zshrc setl foldmethod=marker|setl foldlevel=0
 augroup END
 
 "au FileType css setl omnifunc=csscomplete#CompleteCSS
@@ -456,10 +467,10 @@ endif
 " }}}
 " Tag bar {{{
 let g:tagbar_autofocus = 1
-map <Leader>to :TagbarToggle<cr>
+nn <silent> <leader>t :TagbarToggle<cr>
 " }}}
 " VCSCommand {{{
-nn <leader>vd :VCSVimDiff<CR>
+nn <silent> <leader>vd :VCSVimDiff<CR>
 " }}}
 " Nerd tree {{{
 nn <leader>no :NERDTreeToggle<CR>
@@ -485,14 +496,12 @@ let NERDTreeIgnore=[ '\.pyc$', '\.pyo$', '\.py\$class$', '\.obj$',
 " }}}
 " CtrlP {{{
 let g:ctrlp_user_command = 'ag %s -l --nocolor --hidden -g ""'
-
-let g:ctrlp_max_height = 10
+let g:ctrlp_max_height = 30
 let g:ctrlp_max_files=100000
 let g:ctrlp_clear_cache_on_exit=0
 let g:ctrlp_use_caching = 0
-nn <silent> <Leader>p :CtrlP .<CR>
 nn <silent> <Leader>o :CtrlPBufTag<CR>
-nn <silent> <Leader>i :CtrlPTag<CR>
+"nn <silent> <Leader>i :CtrlPTag<CR>
 nn <silent> <Leader>b :CtrlPBookmarkDir<CR>
 nn <silent> <Leader>z :CtrlPBuffer<CR>
 nn <silent> <Leader>m :CtrlPMRUFiles<CR>
@@ -540,7 +549,8 @@ let g:dbext_default_profile_192_168_99_246_NI='type=MYSQL:user=root:passwd=mysql
 " Eclim {{{
 nn <silent> <Leader>l :LocateFile<CR>
 nn <silent> <Leader>s :JavaSearchContext<CR>
-nn <silent> <Leader>t :ProjectsTree<CR>
+nn <silent> <Leader>i :JavaImport<CR>
+nn <silent> <Leader>p :ProjectsTree<CR>
 nn <silent> <Leader>h :JavaHierarchy<cr>
 xn <silent> <Leader>f :JavaFormat<cr>
 nn <silent> <Leader>j :JavaDocComment<cr>
@@ -585,7 +595,7 @@ vm <expr> D DVB_Duplicate()
 " betterdigraphs {{{
 "inoremap <expr>  <C-K>  BDG_GetDigraph()
 " }}}
-" autsave {{{
+" autosave {{{
 let g:auto_save = 1
 " }}}
 " ack.vim {{{

@@ -165,7 +165,7 @@ vsp vertical
 
 #-eclim
 cd ~/projects/eclim/ && git checkout indigo && \
-cd ~/projects/eclim/ && ant -Dvim.files=${HOME}/projects/viml/vim-eclim -Declipse.home=${ECLIPSE_HOME}
+cd ${PROJECT}/eclim && ant -Dvim.files=${HOME}/.vim/bundle/eclim -Declipse.home=${ECLIPSE_HOME}
 
 ${ECLIPSE_HOME}/eclimd
 

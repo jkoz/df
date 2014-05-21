@@ -26,13 +26,13 @@ def i3clients():
 
 def win_menu(clients, l=10):
     #-fn Inconsolata-10  -nb #555753 -nf #D3D7DF -sb #2E3436 -sf #EEEEEC
-    #dmenu = subprocess.Popen(['dmenu','-i', '-t', '-l', str(l), "-fn", "Inconsolata-11"],
-            #stdin=subprocess.PIPE,
-            #stdout=subprocess.PIPE)
-
-    dmenu = subprocess.Popen(['ruby', '$HOME/data/projects/fzf/fzf'],
+    dmenu = subprocess.Popen(['dmenu','-i', '-t', '-l', str(l), "-fn", "Inconsolata-11"],
             stdin=subprocess.PIPE,
             stdout=subprocess.PIPE)
+
+    #dmenu = subprocess.Popen(['ruby', '/home/tait/data/projects/fzf/fzf'],
+            #stdin=subprocess.PIPE,
+            #stdout=subprocess.PIPE)
     menu_str = '\n'.join(sorted(clients.keys()))
     # Popen.communicate returns a tuple stdout, stderr
     win_str = dmenu.communicate(menu_str.encode('utf-8'))[0].decode('utf-8').rstrip()
