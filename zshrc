@@ -56,7 +56,7 @@ source $ZSH/oh-my-zsh.sh
 # Default Programs {{{
 export EDITOR="vim"
 export PAGER="less"
-export BROWSER="firefox"
+export BROWSER="chromium"
 export MOVPLAY="mplayer"
 export PICVIEW="feh"
 export SNDPLAY="mplayer"
@@ -110,6 +110,11 @@ export LESS_TERMCAP_ue=$'\E[0m'           # end underline
 export LESS_TERMCAP_us=$'\E[04;38;5;146m' # begin underline
 # }}}
 ## aliases
+# browser {{{
+if test -f /etc/debian_versionetc; then
+    alias chromium='chromium-browser'
+fi
+# }}}
 # projects {{{
 alias pA='cd $AXS_HOME'
 # }}}
