@@ -219,7 +219,7 @@ alias gcal-agenda='gcalcli agenda'
 ## function
 # dictionary {{{
 dict() {
-    sdcv -u "Cambridge Advanced Learner's Dictionary" --utf8-output $1 | sed 's/yle=/style=/' | tail -2 | elinks -dump
+    sdcv -u "Cambridge Advanced Learner's Dictionary" -u"Merriam-Webster Collegiate Dictionary" --utf8-output $1 | sed 's/yle=/style=/' | elinks -dump | sed -r 's!(.*). -->(.*)!\2!' | sed -r 's!(.*)>(.*)!\2!' | vim -
 }
 # }}}
 # auto load oh-my-zsh plugin {{{
