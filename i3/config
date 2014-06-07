@@ -15,12 +15,14 @@ set $win Mod4
 set layout tabbed
 
 #font
-font pango:Inconsolata, Inconsolata Bold Condensed 11
+#font pango:Inconsolata, Inconsolata Bold Condensed 11
+font pango:Consolas, Consolas, Bold Consolas 11
 
 # auto start application
 exec "x11vnc -shared -rfbport 5900 -forever -usepw -display :0.0 -bg"
 exec "feh --bg-scale ~/Downloads/media/wallpapers/wall.jpg &"
 exec "urxvtd -q -f -o"
+exec "fetchmail -vk"
 exec i3-sensible-terminal
 #exect scim -d
 
@@ -29,7 +31,6 @@ exec i3-sensible-terminal
 
 #tint2 -c ~/.config/tint2 &
 #~/.conky/conkys
-#fetchmail -vk
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
@@ -41,7 +42,8 @@ bindsym $mod+Return exec i3-sensible-terminal
 bindsym $mod+Shift+q kill
 
 # fuzzy search list of windows
-bindsym $mod+d exec urxvt -e zsh -c "$HOME/.i3/winmenu.py"
+#bindsym $mod+d exec urxvt -e zsh -c "$HOME/.i3/winmenu.py"
+bindsym $mod+d exec $HOME/.i3/winmenu.py
 
 # window
 new_window pixel 2
@@ -77,6 +79,11 @@ bindsym $win+v split v
 
 # enter fullscreen mode for the focused container
 bindsym $mod+f fullscreen
+
+# scrot & gimp - root
+bindsym Print exec scrot -e 'mv $f /tmp/ && gimp /tmp/$f'
+# scrot & gimp - select window or rectangle
+bindsym Mod1+Print exec scrot -s -e 'mv $f /tmp/ && gimp /tmp/$f'
 
 # change container layout (stacked, tabbed, toggle split)
 bindsym $mod+s layout stacking

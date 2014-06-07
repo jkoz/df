@@ -12,6 +12,10 @@ tcpdump -i eth0 -s 65535 host 192.168.95.227 and port 8080 -w ~/soap
 #-tcpdump-view-only-traffic
 tcpdump -q -i eth1 tcp dst port 80 and src host 192.168.0.10
 
+#-irssi
+# enable notification
+sudo apt-get install --reinstall perl perl-base perl-modules system-tools-backends
+
 #-tcpdump-read-cap-file
 /usr/sbin/tcpdump -qns 0 -A -r ~/data.pcap
 /usr/sbin/tcpdump -qns 0 -X -r ~/data.pcap
@@ -35,6 +39,12 @@ tcpdump -nS
 
 # verbose
 tcpdump -nnvvS
+
+# start to debug application
+java -Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=1113 -Xnoagent -Djava.compiler=NONE \
+-jar ~/.m2/repository/com/sun/tools/example/debug/jdb/1.0-SNAPSHOT/jdb-1.0-SNAPSHOT.jar -attach 127.0.0.1:1111 -sourcepath ${SOURCE_PATH}
+# debug the jdb
+java -jar ~/.m2/repository/com/sun/tools/example/debug/jdb/1.0-SNAPSHOT/jdb-1.0-SNAPSHOT.jar -attach 127.0.0.1:1113 -sourcepath /home/tait/data/projects/jdb/src/main/java
 
 # deeper
 tcpdump -nnvvXS
@@ -126,8 +136,31 @@ git remote add origin https://github.com/jkoz/vim-bundle.git
 git push -u origin master
 #1}}}---------------------------------------------------------------------------
 
+#bash {{{
+ This is for redirecting the STDERR & STDOUT:
+
+2>/dev/null
+
+Redirect STDERR to /dev/null (prevent from showing up on console)
+
+|&
+
+Redirect STDERR and STDOUT to STDIN of piped command (cmd1 |& cmd2)
+
+&>/dev/null
+
+Redirect both STDERR & STDOUT to /dev/null (nothing shows up on console)
+
+>/dev/null
+
+Redirect STDOUT to /dev/null (only STDERR shows on console)
+
+2>&-
+#}}}
+
 #-bash-history {{{!
 # exe previous cmds
+
 ls ~
 !!
 # ref 2nd arg of revious cmdt, cmd is 0th
@@ -538,6 +571,12 @@ ntpd -q
 #-ubuntu-nosound
 apt-cache search pkg_name
 apt-get install ubuntu-restricted-extras
+# resolve conflict
+sudo apt-get clean
+sudo apt-get autoclean
+# check if there is package need to upgrade
+sudo dpkg --configure -a
+sudo apt-get -u dist-upgrade
 
 # list all install package
 dpkg --get-selections | grep -v deinstall

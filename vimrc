@@ -30,7 +30,6 @@ Bundle 'gmarik/vundle'
 Bundle 'kien/ctrlp.vim'
 Bundle 'scrooloose/nerdtree'
 Bundle 'scrooloose/nerdcommenter'
-Bundle 'spf13/vim-colors'
 Bundle 'sjl/badwolf'
 Bundle 'vim-scripts/dbext.vim'
 Bundle 'Lokaltog/vim-easymotion'
@@ -49,6 +48,14 @@ Bundle 'atweiden/vim-betterdigraphs'
 Bundle 'chrisbra/unicode.vim'
 Bundle 'suy/vim-ctrlp-commandline'
 Bundle 'vim-scripts/vim-auto-save'
+Bundle 'altercation/vim-colors-solarized'
+Bundle 'hukl/Smyck-Color-Scheme'
+Bundle 'tpope/vim-dispatch'
+"Bundle 'airblade/vim-rooter'
+
+Bundle 'Valloric/YouCompleteMe'
+Bundle 'SirVer/ultisnips'
+Bundle 'honza/vim-snippets'
 Bundle 'ervandew/eclim'
 "Bundle 'tpope/vim-fugitive'
 
@@ -312,13 +319,11 @@ set cot=menuone,menu,longest
 se dict=/usr/share/dict/words
 hi Pmenu ctermbg=238 gui=bold
 
-"colo default
-
-"colo peaksea
-"colo wombat256mod
-"se background=dark
-
-colo badwolf
+" color
+let g:solarized_termcolors=256
+set background=dark
+colo solarized
+"colo smyck
 
 " cursorline, cursorcolumn
 hi CursorLine cterm=underline ctermbg=NONE guibg=#404040 gui=NONE
@@ -336,6 +341,19 @@ hi NonText	ctermbg=NONE	cterm=NONE
 " }}}
 " functions {{{
 " toggle between number and relativenumber
+fu! MvnTest()
+   exe "Mvn test -Dtest=" . expand("%:t:r")
+endf
+com! DoMvnTest cal MvnTest()
+
+fu! CopyMvnTestDebug()
+    let l:cmd = "mvn org.apache.maven.plugins:maven-surefire-plugin:2.9:test "
+    let l:cmd = l:cmd . "-Dmaven.surefire.debug=\"-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=1111 -Xnoagent -Djava.compiler=NONE\" test "
+    let l:cmd = l:cmd . "-Dtest=" . expand("%:t:r")
+    let @+ = l:cmd
+endf
+com! DoCopyMvnTestDebug cal CopyMvnTestDebug()
+
 fu! ToggleNumber()
     if(&relativenumber == 1)
         set norelativenumber
@@ -441,7 +459,15 @@ aug configgroup
     "au BufRead,BufNewFile *.html,*.xhtml,*.xml se softtabstop=2 shiftwidth=2 tabstop=2
     au BufRead,BufNewFile *.html,*.xhtml,*.xml setl foldmethod=indent|setl foldlevel=0
     au BufRead,BufNewFile *.c,*.h,*.cpp for each in split(expand('~/.tags/usr-include*'), "\n") | exe "se tags+=" . each | endfo
-    au BufEnter vimrc,zshrc setl foldmethod=marker|setl foldlevel=0
+    au BufEnter vimrc,zshrc,muttrc setl foldmethod=marker|setl foldlevel=0
+
+    "au BufReadPost *.twig colorscheme koehler
+    "au BufReadPost *.css colorscheme slate
+    "au BufReadPost *.js colorscheme elflord
+    "au BufReadPost *.py colorscheme molokai
+    "au BufReadPost *.html colorscheme monokai
+    "au BufReadPost *.java colorscheme monokai
+    "au BufReadPost *.php colorscheme two2tango
 augroup END
 
 "au FileType css setl omnifunc=csscomplete#CompleteCSS
@@ -473,7 +499,7 @@ nn <silent> <leader>t :TagbarToggle<cr>
 nn <silent> <leader>vd :VCSVimDiff<CR>
 " }}}
 " Nerd tree {{{
-nn <leader>no :NERDTreeToggle<CR>
+nn <leader>n :NERDTreeToggle<CR>
 nn <leader>nf :NERDTreeFind<CR>
 " Store the bookmarks file
 let NERDTreeBookmarksFile=expand("$HOME/.vim/NERDTreeBookmarks")
@@ -558,14 +584,12 @@ nn <silent> <Leader>j :JavaDocComment<cr>
 let g:EclimJavaSearchSingleResult='edit'
 let g:EclimLocateFileDefaultAction='edit'
 let g:EclimLocateFileScope = 'workspace'
+let g:EclimCompletionMethod = 'omnifunc'
 
-com! DoSetBreakPoint cal SetBreakPoint()
-nn <silent> sbp :DoSetBreakPoint<CR>
-
-com! DoClearAllBreakPoint cal ClearAllBreakPoint()
-
-nm cpb :let @+ = GetBreakPoint()<CR>
-nm cpq :let @+ = GetQualiedName()<cr>
+fu! CopyBreakPoint()
+    let @+ = GetBreakPoint()
+endf
+com! DoCopyBreakPoint cal CopyBreakPoint()
 
 fu! GetBreakPoint()
     return 'stop at ' . GetQualiedName() . ':' . line(".")
@@ -574,10 +598,13 @@ endf
 fu! ClearAllBreakPoint()
     call writefile([], $HOME . "/.jdbrc")
 endf
+com! DoClearAllBreakPoint cal ClearAllBreakPoint()
 
 fu! SetBreakPoint()
-    call AppendToFile($HOME . "/.jdbrc", [GetBreakPoint()])
+    cal AppendToFile($HOME . "/.jdbrc", [GetBreakPoint()])
+    cal CopyBreakPoint()
 endf
+com! DoSetBreakPoint cal SetBreakPoint()
 
 fu! GetQualiedName()
     let l:bp = substitute(split(getline("1"))[1], ';', '.', '')
@@ -595,6 +622,15 @@ vm <expr> D DVB_Duplicate()
 " betterdigraphs {{{
 "inoremap <expr>  <C-K>  BDG_GetDigraph()
 " }}}
+" Ack {{{
+nn <silent> <Leader>a :Ack <cword><cr>
+" }}}
+" utilsnip{{{
+let g:UltiSnipsExpandTrigger="<c-j>"
+let g:UltiSnipsJumpForwardTrigger="<c-b>"
+let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+"let g:UltiSnipsSnippetsDir="~/.vim/bundle/vim-snippets/UltiSnips"
+" }}}
 " autosave {{{
 let g:auto_save = 1
 " }}}
@@ -608,5 +644,6 @@ if has('gui_running')
     set guioptions-=T  "remove toolbar
     set guioptions-=r  "remove right-hand scroll bar
     set guioptions-=L  "remove left-hand scroll bar
+    set guifont=Consolas\ 12
 endif
 " }}}

@@ -173,7 +173,7 @@ alias D='cd ~/Downloads'
 alias uD="cd ${DOTFILE_HOME} && ./INSTALL"
 # }}}
 # mutt {{{
-alias mutt='TERM=screen-256color mutt'
+alias mutt='TERM=screen-256color mutt -y'
 # }}}
 # IRC {{{
 alias irssi='TERM=screen-256color irssi'
@@ -217,6 +217,11 @@ alias gcal-add='gcalcli quick'
 alias gcal-agenda='gcalcli agenda'
 # }}}
 ## function
+# kill process {{{
+dkill () {
+    ps -ef | dmenu -l 10 | awk '{print $2}' | xargs kill -9 &>/dev/null
+}
+# }}}
 # dictionary {{{
 dict() {
     sdcv -u "Cambridge Advanced Learner's Dictionary" -u"Merriam-Webster Collegiate Dictionary" --utf8-output $1 | sed 's/yle=/style=/' | elinks -dump | sed -r 's!(.*). -->(.*)!\2!' | sed -r 's!(.*)>(.*)!\2!' | vim -
