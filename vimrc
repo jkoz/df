@@ -459,7 +459,7 @@ aug configgroup
     "au BufRead,BufNewFile *.html,*.xhtml,*.xml se softtabstop=2 shiftwidth=2 tabstop=2
     au BufRead,BufNewFile *.html,*.xhtml,*.xml setl foldmethod=indent|setl foldlevel=0
     au BufRead,BufNewFile *.c,*.h,*.cpp for each in split(expand('~/.tags/usr-include*'), "\n") | exe "se tags+=" . each | endfo
-    au BufEnter vimrc,zshrc,muttrc setl foldmethod=marker|setl foldlevel=0
+    au BufEnter *.txt,vimrc,zshrc,muttrc setl foldmethod=marker|setl foldlevel=0
 
     "au BufReadPost *.twig colorscheme koehler
     "au BufReadPost *.css colorscheme slate

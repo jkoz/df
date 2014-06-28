@@ -452,68 +452,96 @@ mvn org.codehaus.mojo:cobertura-maven-plugin:2.4.1:cobertura
 mvn org.apache.maven.plugins:maven-eclipse-plugin:2.9:eclipse
 #1}}}---------------------------------------------------------------------------
 
-#-pacman-yaourt-aur {{{1
-pacman -S xf86-input-synaptics
-pacman -S base-devel
-pacman -S usb_modeswitch
-pacman -S modemmanager
-pacman -S networkmanager
-pacman -S network-manager-applet
-pacman -S xfce4-notifyd
-pacman -S gnome-keyring
-pacman -S vim
-pacman -S sudo
-pacman -S nvidia
-pacman -S tmux
-pacman -S xclip
-pacman -S grub-bios
-pacman -S gzip
-pacman -S axel
-pacman -S xlockmore
-pacman -S zip
-pacman -S unzip
-pacman -S unrar
-pacman -S wpa_supplicant
-pacman -S wireless_tools
-pacman -S systemd
-pacman -S xorg-xinit
-pacman -S xterm
-pacman -S rxvt-unicode
-pacman -S links
-pacman -S alsa-utils
-pacman -S rtorrent
-pacman -S tor
-pacman -S ack
-pacman -S libreoffice-en-GB
-pacman -S libreoffice-calc
-pacman -S libreoffice-writer
-pacman -S libreoffice-impress
-pacman -S mupdf
-pacman -S firefox
-pacman -S flashplugin
-pacman -S thunderbird
-pacman -S openbox
-pacman -S samba
-pacman -S iptables
-pacman -S subversion
-pacman -S git
-pacman -S openssh
-pacman -S mplayer
-pacman -S feh
-pacman -S nitrogen
-pacman -S mutt
-pacman -S xchm
-pacman -S tint2
-pacman -S cvs
-pacman -S yaourt
-pacman -S netpbm
-sudo pacman -S obconf
-sudo pacman -S openbox-themes
-sudo pacman -S ffmpeg
-sudo pacman -S mc
-pacman -S lib32-gtk # for install olad8
+# install archP
 
-pacman -S xorg-fonts-100dpi
+# 0. Swap caps lock and ctrl 
+loadkeys emacs2
+
+# 1. Partitioning
+
+lsblk
+fdisk -l
+
+mkfs.ext3 /dev/sda1
+mkfs.ext4 /dev/sda5
+mkfs.ext4 /dev/sda6
+mkfs.ext4 /dev/sda8
+
+# 2. Mounting 
+
+mount /dev/sda5 /mnt 
+mkdir /mnt/boot /mnt/var /mnt/home
+
+mount /dev/sda1 /mnt/boot
+mount /dev/sda6 /mnt/var
+mount /dev/sda8 /mnt/home
+
+# 3. install system base
+pacstrap /mnt base vim tmux
+
+# 4. generate fstab 
+genfstab -p /mnt >> /mnt/etc/fstab 
+
+# 5. change root new env
+arch-chroot /mnt
+
+# 6. create hostname
+echo "jkoz_arch_linux" > /etc/hostname
+
+# 7. locale setting
+ln -s /usr/share/zoneinfo/Canada/Mountain /etc/localtime
+
+# 8. enable us locale 
+
+sed -i 's!#en_US.UTF-8 UTF-8!en_US.UTF-8 UTF-8!' /etc/locale.gen
+sed -i 's!#en_US ISO-8859-1!en_US ISO-8859-1!' /etc/locale.gen
+
+locale-gen
+
+# 9. increase kdb rate and persistent keymap (swap caplocks and ctrl)
+
+echo "KEYMAP=\"emacs2\"" > /etc/vconsole.conf
+kbdrate -d 30  -r 400
+
+# 10. install grub
+pacman -S grub
+
+mkinitcpio -p linux
+grub-install /dev/sda
+grub-mkconfig -o /boot/grub/grub.cfg
+
+# 11. reboot and set up root passwd
+passwd
+
+# 12. enable service network 
+systemctl list-unit-files
+systemctl enable dhcpcd
+
+# 13. add new user
+useradd -m -d/home/tait -s /usr/bin/zsh tait 
+useradd -m -g users -G audio,lp,optical,storage,video,wheel,games,power -s /usr/bin/zsh tait
+
+# 14. install my favorite apps 
+pacman -S \
+dialog wpa_supplicant elinks zsh sudo fbterm
+ttf-inconsolata
+git subversion cvs xclip axel
+zip unzip unrar dmenu
+xorg xorg-server xorg-xinit i3
+mplayer ffmpeg firefox chromium rtorrent flashplugin 
+xlockmore rxvt-unicode alsa-utils alsa-oss
+mupdf
+samba openssh
+feh
+mutt ranger
+cdrkit net-tools
+cabextract
+cmake
+
+pacman -S --needed base-devel
+
+# pacman search package 
+pacman -Ss grub
 
 # install new consolas
 set -e
