@@ -611,6 +611,29 @@ fu! GetQualiedName()
     let l:bp = l:bp . substitute(expand('%:t'), '.java', '', '')
     return l:bp
 endf
+
+fu! ImportAxsProjects()
+   exe "ProjectImport $ROOT/apc.app/plugins/apc.app.plugins.fwk/testfwk/cglib"
+   exe "ProjectImport $ROOT/apc.app/plugins/apc.app.plugins.fwk/testfwk/gsip"
+   exe "ProjectImport $ROOT/apc.app/plugins/apc.app.plugins.fwk/common"
+   exe "ProjectImport $ROOT/apc.app/plugins/apc.app.plugins.fwk/configuratorschema/"
+   exe "ProjectImport $ROOT/apc.app/plugins/apc.app.plugins.fwk/documentationschema/"
+   exe "ProjectImport $ROOT/apc.app/plugins/apc.app.plugins.fwk/epon/"
+   exe "ProjectImport $ROOT/apc.app/plugins/apc.app.plugins.fwk/fttbmdu/"
+   exe "ProjectImport $ROOT/apc.app/plugins/apc.app.plugins.fwk/g6/"
+   exe "ProjectImport $ROOT/apc.app/plugins/apc.app.plugins.fwk/isam"
+   exe "ProjectImport $ROOT/apc.app/plugins/apc.app.plugins.fwk/isam_ANSI/"
+   exe "ProjectImport $ROOT/apc.app/plugins/apc.app.plugins.fwk/isam_ETSI"
+   "exe "ProjectImport $ROOT/apc.app/plugins/apc.app.plugins.isam.4.5/server"
+   "exe "ProjectImport $ROOT/apc.app/plugins/apc.app.plugins.gpon.4.8/server"
+
+   "exe "ProjectImport $ROOT/apc.app/apc.app.fwk/components/apc-core/"
+   "exe "ProjectImport $ROOT/apc.app/apc.app.fwk/components/apc-ete-core"
+   "exe "ProjectImport $ROOT/apc.app/apc.app.fwk/components/axs-adapter"
+   "exe "ProjectImport $ROOT/apc.app/apc.app.fwk/components/axs-utils"
+   "exe "ProjectImport $ROOT/apc.app/apc.app.fwk/components/dslam-conf"
+   "exe "ProjectImport $ROOT/apc.app/apc.app.fwk/components/util"
+endf
 " }}}
 " dragvisuals {{{
 vm <expr> H DVB_Drag('left')

@@ -110,6 +110,7 @@ export LESS_TERMCAP_ue=$'\E[0m'           # end underline
 export LESS_TERMCAP_us=$'\E[04;38;5;146m' # begin underline
 # }}}
 ## aliases
+alias cp="cp -R"
 # browser {{{
 if test -f /etc/debian_versionetc; then
     alias chromium='chromium-browser'
@@ -192,6 +193,7 @@ alias e='vim'
 alias eZ='vim ${DOTFILE_HOME}/zshrc; uD'
 alias eI='vim ${DOTFILE_HOME}/i3/config; uD'
 alias eV='vim ${DOTFILE_HOME}/vimrc; uD'
+alias eC='vim ${DOTFILE_HOME}/cmd.txt'
 # }}}
 # rip CDs {{{
 alias CDinfo='cdparanoia -vsQ'
