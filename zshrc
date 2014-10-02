@@ -42,7 +42,7 @@ zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
 zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
 # }}}
 # oh my zsh {{{
-ZSH=$HOME/.oh-my-zsh
+ZSH=/usr/share/oh-my-zsh
 if test "$UID" -eq 0
 then
     plugins=(git jira vi-mode svn safe-paste)
@@ -111,6 +111,7 @@ export LESS_TERMCAP_us=$'\E[04;38;5;146m' # begin underline
 # }}}
 ## aliases
 alias cp="cp -R"
+alias f="find . -name"
 # browser {{{
 if test -f /etc/debian_versionetc; then
     alias chromium='chromium-browser'

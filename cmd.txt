@@ -69,6 +69,7 @@ tcpdump -nnvvXSs
 sudo cdrdao copy
 k3b
 
+mkdosfs -F 32 -I /dev/sdb1
 
 #-curl {{{1
 #-curl-post-soap
@@ -359,6 +360,8 @@ pdftk _stdin_.pdf cat 1-endW output out.pdf
 # resive pdf 
 pdf2ps _stdin_.pdf large.pdf && ps2pdf large.pdf smal.pdf && rm large.pdf
 gs -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dPDFSETTINGS=/screen -sOutputFile=new_file.pdf original_file.pdf
+# fill pdf forms and save
+pacman -S cabaretstage
 #1}}}---------------------------------------------------------------------------
 
 # check terminal color 256, 88, 32.. {{{1
@@ -450,12 +453,14 @@ mvn dependency:tree
 mvn org.apache.maven.plugins:maven-archetype-plugin:2.2:generate
 mvn org.codehaus.mojo:cobertura-maven-plugin:2.4.1:cobertura
 mvn org.apache.maven.plugins:maven-eclipse-plugin:2.9:eclipse
+mvn install:install-file -DgroupId=com.sun -DartifactId=tools -Dversion=1.7.0_51 -Dpackaging=jar -Dfile=$JAVA_HOME/lib/tools.jar
 #1}}}---------------------------------------------------------------------------
 
 # install archP
 
 # 0. Swap caps lock and ctrl 
 loadkeys emacs2
+kbdrate -d 30  -r 400
 
 # 1. Partitioning
 
@@ -522,57 +527,38 @@ useradd -m -d/home/tait -s /usr/bin/zsh tait
 useradd -m -g users -G audio,lp,optical,storage,video,wheel,games,power -s /usr/bin/zsh tait
 
 # 14. install my favorite apps 
-pacman -S \
-dialog wpa_supplicant elinks zsh sudo fbterm
-ttf-inconsolata
-git subversion cvs xclip axel
-zip unzip unrar dmenu
-xorg xorg-server xorg-xinit i3
-mplayer ffmpeg firefox chromium rtorrent flashplugin 
-xlockmore rxvt-unicode alsa-utils alsa-oss
-mupdf
-samba openssh
-feh
-mutt ranger
-cdrkit net-tools
-cabextract
-cmake
+pacman -S dialog wpa_supplicant elinks zsh sudo fbterm ttf-inconsolata git subversion cvs xclip axel zip unzip unrar dmenu xorg xorg-server xorg-xinit i3 mplayer \
+ffmpeg firefox chromium rtorrent flashplugin xlockmore rxvt-unicode alsa-utils alsa-oss mupdf samba openssh feh mutt ranger cdrkit net-tools cabextract cmake
 
+# 15. enable yaourt
+echo "[archlinuxfr]" >> /etc/pacman.conf
+echo "SigLevel = Never" >> /etc/pacman.conf
+echo "Server = http://repo.archlinux.fr/$arch" >> /etc/pacman.conf
+
+pacman -S yaourt
 pacman -S --needed base-devel
+yaourt -S dropbox dropbox-cli grive ttf-vista-fonts chromium-pepper-flash
+yaourt -S shrew-vpn-client
 
-# pacman search package 
-pacman -Ss grub
+# 16. enable sudo for wheel groups
+su - 
+sudoedit /etc/sudoers
 
-# install new consolas
-set -e
-set -x
-mkdir temp
-cd temp
-axel http://download.microsoft.com/download/E/6/7/E675FFFC-2A6D-4AB0-B3EB-27C9F8C8F696/PowerPointViewer.exe
-cabextract -L -F ppviewer.cab PowerPointViewer.exe
-cabextract ppviewer.cab
+uncomment %wheel ALL=(ALL) ALL
 
-cd /usr/local/share/fonts
-sudo mkdir microsoftfonts
 
 # for install olad8
-pacman -S lib32-gtk
-pacman -S lib32-alsa-lib
-pacman -S lib32-nvidia-utils
-pacman -S lib32-libdbus
-
-sudo pacman -S cdrkit
+pacman -S lib32-gtk lib32-alsa-lib lib32-nvidia-utils lib32-libdbus 
 
 #pacman-upate all package
 pacman -Syu
-pacman -Ss subversion
 
-yaourt -S dropbox dropbox-cli
-yaourt -S shrew-vpn-client
+# search for package
+pacman -Ss subversion
 
 #pkgfile search package info of a lib
 sudo yaourt -S pkgfile
-#
+
 # view library dependency of built file
 ldd /opt/oald8/oald8-bin
 
@@ -627,3 +613,7 @@ iqkea
 #-ffmpeg {{{1
 ffmpeg -f x11grab -r 25 -s 1024x768 -i :0.0+100,200 output.flv
 #1}}}
+
+#axs {
+cd $ROOT && ./scripts/runjboss --debug basic.isam.5.0/axs-*-mobject-plugin basic.isam.5.0/axs-*-bidm-plugin
+}

@@ -53,7 +53,7 @@ Bundle 'hukl/Smyck-Color-Scheme'
 Bundle 'tpope/vim-dispatch'
 "Bundle 'airblade/vim-rooter'
 
-Bundle 'Valloric/YouCompleteMe'
+"Bundle 'Valloric/YouCompleteMe'
 Bundle 'SirVer/ultisnips'
 Bundle 'honza/vim-snippets'
 Bundle 'ervandew/eclim'
@@ -341,18 +341,30 @@ hi NonText	ctermbg=NONE	cterm=NONE
 " }}}
 " functions {{{
 " toggle between number and relativenumber
+" writing
+fu! DoEnableWritingMode()
+   set wrap
+   set linebreak
+   set nolist
+   set formatoptions=1
+   set lbr
+endf
+com! EnableWritingMode cal DoEnableWritingMode()
+
+" mvn
 fu! MvnTest()
    exe "Mvn test -Dtest=" . expand("%:t:r")
 endf
 com! DoMvnTest cal MvnTest()
 
-fu! CopyMvnTestDebug()
-    let l:cmd = "mvn org.apache.maven.plugins:maven-surefire-plugin:2.9:test "
+fu! MvnTestDebug()
+    let l:cmd = "Mvn org.apache.maven.plugins:maven-surefire-plugin:2.9:test "
     let l:cmd = l:cmd . "-Dmaven.surefire.debug=\"-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=1111 -Xnoagent -Djava.compiler=NONE\" test "
     let l:cmd = l:cmd . "-Dtest=" . expand("%:t:r")
-    let @+ = l:cmd
+    "let @+ = l:cmd
+    exe l:cmd
 endf
-com! DoCopyMvnTestDebug cal CopyMvnTestDebug()
+com! DoMvnTestDebug cal MvnTestDebug()
 
 fu! ToggleNumber()
     if(&relativenumber == 1)
@@ -619,20 +631,22 @@ fu! ImportAxsProjects()
    exe "ProjectImport $ROOT/apc.app/plugins/apc.app.plugins.fwk/configuratorschema/"
    exe "ProjectImport $ROOT/apc.app/plugins/apc.app.plugins.fwk/documentationschema/"
    exe "ProjectImport $ROOT/apc.app/plugins/apc.app.plugins.fwk/epon/"
+   exe "ProjectImport $ROOT/apc.app/plugins/apc.app.plugins.fwk/gpon"
    exe "ProjectImport $ROOT/apc.app/plugins/apc.app.plugins.fwk/fttbmdu/"
    exe "ProjectImport $ROOT/apc.app/plugins/apc.app.plugins.fwk/g6/"
    exe "ProjectImport $ROOT/apc.app/plugins/apc.app.plugins.fwk/isam"
    exe "ProjectImport $ROOT/apc.app/plugins/apc.app.plugins.fwk/isam_ANSI/"
    exe "ProjectImport $ROOT/apc.app/plugins/apc.app.plugins.fwk/isam_ETSI"
-   "exe "ProjectImport $ROOT/apc.app/plugins/apc.app.plugins.isam.4.5/server"
+
+   exe "ProjectImport $ROOT/apc.app/plugins/apc.app.plugins.isam.4.5/server"
    "exe "ProjectImport $ROOT/apc.app/plugins/apc.app.plugins.gpon.4.8/server"
 
-   "exe "ProjectImport $ROOT/apc.app/apc.app.fwk/components/apc-core/"
-   "exe "ProjectImport $ROOT/apc.app/apc.app.fwk/components/apc-ete-core"
-   "exe "ProjectImport $ROOT/apc.app/apc.app.fwk/components/axs-adapter"
-   "exe "ProjectImport $ROOT/apc.app/apc.app.fwk/components/axs-utils"
-   "exe "ProjectImport $ROOT/apc.app/apc.app.fwk/components/dslam-conf"
-   "exe "ProjectImport $ROOT/apc.app/apc.app.fwk/components/util"
+   exe "ProjectImport $ROOT/apc.app/apc.app.fwk/components/apc-core/jar"
+   exe "ProjectImport $ROOT/apc.app/apc.app.fwk/components/apc-ete-core/jar"
+   exe "ProjectImport $ROOT/apc.app/apc.app.fwk/components/dslam-conf/jar"
+   exe "ProjectImport $ROOT/apc.app/apc.app.fwk/components/axs-adapter"
+   exe "ProjectImport $ROOT/apc.app/apc.app.fwk/components/axs-utils"
+   exe "ProjectImport $ROOT/apc.app/apc.app.fwk/components/util"
 endf
 " }}}
 " dragvisuals {{{
